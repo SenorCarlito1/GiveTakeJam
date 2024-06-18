@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class ButtonFunctions : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void resume()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GameManager.instance.unPauseState();
     }
 }

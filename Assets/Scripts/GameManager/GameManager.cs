@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance;
+    
     
 
     [Header("-----Player-----")]
@@ -16,6 +19,8 @@ public class GameManager : MonoBehaviour
     [Header("-----UI-----")]
     public GameObject activeMenu;
     public GameObject pauseMenu;
+    public Button resumeButton;
+    public TextMeshProUGUI resumeText;
 
     public bool isPaused;
     float timeScaleOrig;
@@ -45,6 +50,8 @@ public class GameManager : MonoBehaviour
                 unPauseState();
             }
         }
+        
+       
     }
 
     public void pauseState()
@@ -63,4 +70,5 @@ public class GameManager : MonoBehaviour
         activeMenu.SetActive(false);
         activeMenu = null;
     }
+    
 }
