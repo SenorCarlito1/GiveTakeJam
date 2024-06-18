@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class cameraControl : MonoBehaviour
 {
+    [Header("----Sensitivity----")]
     [SerializeField] private int sensHor;
     [SerializeField] private int sensVert;
 
+    [Header("----Rotation Lock----")]
     [SerializeField] private int lockVermin;
     [SerializeField] private int lockVermax;
 
+    [Header("----InvertLook----")]
     [SerializeField] private bool invertY;
 
     private float xRoation;
@@ -43,4 +46,6 @@ public class cameraControl : MonoBehaviour
 
         transform.parent.Rotate(Vector3.up * mouseX);
     }
+
+    
 }

@@ -9,19 +9,21 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 move;
     private Vector3 playerVeclocity;
 
-    [Header("Components")]
+    [Header("----Components----")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private AudioSource audioSource;
     private cameraControl camera;
 
 
-    [Header("Movement Parameters")]
+    [Header("----Movement Parameters----")]
     [SerializeField] private float fowardSpeed;
     [SerializeField] private float backSpeed;
     [SerializeField] private float sprintMod;
+
+    [Header("----Jump Parameters----")]
     [SerializeField] private float jumpHeight;
     [SerializeField] private float gravityValue;
-    [SerializeField] private int jumpedTimes;
+    private int jumpedTimes;
     [SerializeField] private int jumpMax;
 
     private void Start()

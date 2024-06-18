@@ -10,11 +10,16 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager instance;
-    
-    
+
+    [Header("----Camera----")]
+    public Camera firstPersonCamera;
+    public Camera thirdPersonCamera;
+    public Camera currCamera;
+    private Camera[] allCameras;
 
     [Header("-----Player-----")]
     public GameObject player;
+
 
     [Header("-----UI-----")]
     public GameObject activeMenu;
@@ -31,6 +36,21 @@ public class GameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
         timeScaleOrig = Time.timeScale;
+        thirdPersonCamera = Camera.main;
+        allCameras = Camera.allCameras;
+        for (int i = 0; i < allCameras.Length; i++)
+        {
+            if (allCameras[i].CompareTag("FirstPersonCamera"))
+            {
+                firstPersonCamera = allCameras[i];
+            }
+        }
+    }
+
+    private void Start()
+    {
+        currCamera = thirdPersonCamera;
+        firstPersonCamera.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -51,7 +71,7 @@ public class GameManager : MonoBehaviour
             }
         }
         
-       
+        ChangePOV();
     }
 
     public void pauseState()
@@ -70,5 +90,26 @@ public class GameManager : MonoBehaviour
         activeMenu.SetActive(false);
         activeMenu = null;
     }
-    
+
+    private void ChangePOV()
+    {
+        if (Input.GetButtonDown("TogglePOV"))
+        {
+            //currCamera = firstPersonCamera;
+            if (currCamera == thirdPersonCamera)
+            {
+                thirdPersonCamera.gameObject.SetActive(false);
+                firstPersonCamera.gameObject.SetActive(true);
+                currCamera = firstPersonCamera;
+                Camera.SetupCurrent(currCamera);
+            }
+            else if (currCamera == firstPersonCamera)
+            {
+                thirdPersonCamera.gameObject.SetActive(true);
+                firstPersonCamera.gameObject.SetActive(false);
+                currCamera = thirdPersonCamera;
+                Camera.SetupCurrent(currCamera);
+            }
+        }
+    }
 }
