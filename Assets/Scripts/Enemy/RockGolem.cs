@@ -1,105 +1,147 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RockGolem : MonoBehaviour
+public class EnemyPatrol : MonoBehaviour
 {
-    public NavMeshAgent agent;
-    public Transform player;
-    public LayerMask whatIsGround, whatIsPlayer;
+    public float walkPointRange = 5f; // Range within which to choose the next patrol point
+    public float sightRange = 10f; // Range within which the enemy can detect the player
+    public float fieldOfView = 110f; // Field of view angle in degrees
+    public float chaseStoppingDistance = 2f; // Distance at which the enemy stops when chasing
+    public float minDistanceToPlayer = 1.5f; // Minimum distance to maintain from the player
+    public float memoryDuration = 3f; // Duration to remember player's last known position after losing sight
+    public Transform player; // Reference to the player transform
 
-    //Patrolling
-    public Vector3 walkPoint;
-    bool walkPointSet;
-    public float walkPointRange;
+    private Vector3 walkPoint;
+    private bool walkPointSet;
+    private NavMeshAgent navAgent;
+    private bool isChasing;
+    private Vector3 lastKnownPlayerPosition;
+    private float memoryTimer;
 
-    //Attacking
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
-
-    //States
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerinAttackRange;
-
-    public void Awake()
+    void Start()
     {
-        player = GameObject.Find("Player").transform;
-        agent = GetComponent<NavMeshAgent>();
+        navAgent = GetComponent<NavMeshAgent>();
+        SetNewWalkPoint();
     }
-    private void Update()
-    {
-        //checks for sight and attack range;
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
-        playerinAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerinAttackRange)
+    void Update()
+    {
+        if (CanSeePlayer())
         {
-            Patrolling();
-        }
-        if (playerInSightRange && !playerinAttackRange)
-        {
+            // Update last known player position
+            lastKnownPlayerPosition = player.position;
+            memoryTimer = memoryDuration;
+
             ChasePlayer();
         }
-        if (!playerInSightRange && playerinAttackRange)
+        else
         {
-            AttackPlayer();
+            if (isChasing)
+            {
+                // If no longer chasing but still in memory duration, continue towards last known position
+                if (memoryTimer > 0)
+                {
+                    navAgent.SetDestination(lastKnownPlayerPosition);
+                    memoryTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    isChasing = false;
+                    SetNewWalkPoint();
+                }
+            }
+            else
+            {
+                Patrol();
+            }
         }
     }
-    private void Patrolling()
+
+    private bool CanSeePlayer()
     {
-        if (!walkPointSet)
+        if (Vector3.Distance(transform.position, player.position) < sightRange)
         {
-            SearchWalkPoint();
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            float angleBetweenEnemyAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+
+            if (angleBetweenEnemyAndPlayer < fieldOfView / 2)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, directionToPlayer, out hit, sightRange))
+                {
+                    if (hit.transform == player)
+                    {
+                        return true;
+                    }
+                }
+            }
         }
+
+        return false;
+    }
+
+    private void ChasePlayer()
+    {
+        isChasing = true;
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        Vector3 targetPosition = player.position - directionToPlayer * minDistanceToPlayer;
+        navAgent.SetDestination(targetPosition);
+
+        // Ensure enemy stops before colliding with the player
+        if (Vector3.Distance(transform.position, player.position) <= chaseStoppingDistance)
+        {
+            // Add logic to attack or handle close proximity to the player
+            // For example, you can add attack behavior or trigger game over here
+            Debug.Log("Player too close! Implement attack or game over logic.");
+        }
+    }
+
+    private void Patrol()
+    {
         if (walkPointSet)
         {
-            agent.SetDestination(walkPoint);
-        }
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+            navAgent.SetDestination(walkPoint);
 
-        //reached walkpoint
-        if (distanceToWalkPoint.magnitude < 1f)
+            if (navAgent.remainingDistance <= navAgent.stoppingDistance && !navAgent.pathPending)
+            {
+                walkPointSet = false;
+                SetNewWalkPoint();
+            }
+        }
+        else
         {
-            walkPointSet = false;
+            SetNewWalkPoint();
         }
     }
-    private void SearchWalkPoint()
+
+    private void SetNewWalkPoint()
     {
-        float randomZ = Random.Range(-walkPointRange,walkPointRange);
-        float randomX = Random.Range(-walkPointRange,walkPointRange);
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = Random.Range(-walkPointRange, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        
-        if(Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f))
         {
             walkPointSet = true;
         }
     }
-    private void ChasePlayer()
-    {
-        agent.SetDestination(player.position);
-    }
-    private void AttackPlayer()
-    {
-        agent.SetDestination(transform.position);
-        transform.LookAt(player);
-        if(!alreadyAttacked)
-        {
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-        }
-    }
-    private void ResetAttack()
-    {
-        alreadyAttacked = false;
-    }
+
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        // Draw patrol range
         Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, walkPointRange);
+
+        // Draw sight range
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, sightRange);
 
+        // Draw last known position
+        if (isChasing && memoryTimer > 0)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(transform.position, lastKnownPlayerPosition);
+        }
     }
 }
