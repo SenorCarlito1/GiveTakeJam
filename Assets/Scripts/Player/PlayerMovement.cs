@@ -26,10 +26,13 @@ public class PlayerMovement : MonoBehaviour
     private int jumpedTimes;
     [SerializeField] private int jumpMax;
 
+    Animator animator;
+
     private void Start()
     {
         origSpeed = fowardSpeed;
         camera = GetComponentInChildren<cameraControl>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -60,12 +63,23 @@ public class PlayerMovement : MonoBehaviour
         if (dot > 0.9)
         {
             speed = fowardSpeed;
+            
         }
         else
         {
             speed = backSpeed;
         }
 
+        // Run Animation Logic
+        if (Input.GetButton("Vertical"))
+        {
+            animator.SetBool("IsRunning", true);
+        }
+        else
+        {
+            animator.SetBool("IsRunning", false);
+        }
+        
         controller.Move(move * Time.deltaTime * speed);
 
         playerVeclocity.y -= gravityValue * Time.deltaTime;
