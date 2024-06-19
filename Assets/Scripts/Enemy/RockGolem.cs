@@ -3,14 +3,27 @@ using UnityEngine.AI;
 
 public class EnemyPatrol : MonoBehaviour
 {
-    public float walkPointRange = 5f; // Range within which to choose the next patrol point
-    public float sightRange = 10f; // Range within which the enemy can detect the player
-    public float fieldOfView = 110f; // Field of view angle in degrees
-    public float chaseStoppingDistance = 2f; // Distance at which the enemy stops when chasing
-    public float minDistanceToPlayer = 1.5f; // Minimum distance to maintain from the player
-    public float memoryDuration = 3f; // Duration to remember player's last known position after losing sight
-    public float idleDuration = 2f; // Duration to stay idle between patrols
-    public Transform player; // Reference to the player transform
+    [Header("---Patrol Settings---")]
+    [SerializeField] private float walkPointRange = 5f;
+
+    [Header("---Detection Settings---")]
+    [SerializeField] private float sightRange = 10f;
+    [SerializeField] private float fieldOfView = 110f;
+
+    [Header("---Chase Settings---")]
+    [SerializeField] private float chaseStoppingDistance = 2f;
+    [SerializeField] private float minDistanceToPlayer = 1.5f;
+
+    [Header("---Behavior Settings---")]
+    [SerializeField] private float memoryDuration = 3f;
+    [SerializeField] private float idleDuration = 2f;
+    [SerializeField] private Transform player;
+
+    [Header("---Attack Settings---")]
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Transform projectileSpawnPoint;
+    [SerializeField] private float throwForce = 10f;
+    [SerializeField] private float throwTriggerDistance = 10f;
 
     private Vector3 walkPoint;
     private bool walkPointSet;
@@ -21,21 +34,36 @@ public class EnemyPatrol : MonoBehaviour
     private float idleTimer;
     private bool isIdle;
     private Animator animator;
+    private EnemyHealth enemyHealth;
+
+    private bool hasThrownProjectile;
+    private float throwTimer;
 
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        enemyHealth = GetComponent<EnemyHealth>();
         SetNewWalkPoint();
     }
 
     void Update()
     {
+        if (enemyHealth.currHealth <= 0)
+        {
+            return;
+        }
+
         if (CanSeePlayer())
         {
-            // Update last known player position
             lastKnownPlayerPosition = player.position;
             memoryTimer = memoryDuration;
+
+            if (isChasing && !hasThrownProjectile && Vector3.Distance(transform.position, player.position) > throwTriggerDistance)
+            {
+
+                animator.SetTrigger("ThrowBoulder");
+            }
 
             ChasePlayer();
         }
@@ -43,7 +71,6 @@ public class EnemyPatrol : MonoBehaviour
         {
             if (isChasing)
             {
-                // If no longer chasing but still in memory duration, continue towards last known position
                 if (memoryTimer > 0)
                 {
                     navAgent.SetDestination(lastKnownPlayerPosition);
@@ -68,8 +95,18 @@ public class EnemyPatrol : MonoBehaviour
             }
         }
 
-        // Update Animator's Speed parameter
         animator.SetFloat("Speed", navAgent.velocity.magnitude);
+
+        if (throwTimer > 0)
+        {
+            throwTimer -= Time.deltaTime;
+            if (throwTimer <= 0)
+            {
+                //SpawnAndThrowProjectile();
+                hasThrownProjectile = true;
+            }
+        }
+        hasThrownProjectile = false;
     }
 
     private bool CanSeePlayer()
@@ -103,11 +140,8 @@ public class EnemyPatrol : MonoBehaviour
         Vector3 targetPosition = player.position - directionToPlayer * minDistanceToPlayer;
         navAgent.SetDestination(targetPosition);
 
-        // Ensure enemy stops before colliding with the player
         if (Vector3.Distance(transform.position, player.position) <= chaseStoppingDistance)
         {
-            // Add logic to attack or handle close proximity to the player
-            // For example, you can add attack behavior or trigger game over here
             Debug.Log("Player too close! Implement attack or game over logic.");
         }
     }
@@ -164,19 +198,30 @@ public class EnemyPatrol : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        // Draw patrol range
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, walkPointRange);
 
-        // Draw sight range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, sightRange);
 
-        // Draw last known position
         if (isChasing && memoryTimer > 0)
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(transform.position, lastKnownPlayerPosition);
         }
     }
+
+    public void SpawnAndThrowProjectile()
+    {
+        // Spawn projectile at the projectileSpawnPoint
+        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+
+        // Set the target of the ProjectileController to the player
+        ProjectileController controller = projectile.GetComponent<ProjectileController>();
+        if (controller != null)
+        {
+            controller.target = player;
+        }
+    }
+
 }
