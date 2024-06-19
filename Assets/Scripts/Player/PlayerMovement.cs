@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("----Components----")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private GameObject woodenBuilding;
     private cameraControl camera;
+    
 
 
     [Header("----Movement Parameters----")]
@@ -41,10 +44,36 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftAlt)){playerHealth.TakeDamage(1);}
-
+   
+        // Player base building start
+        RaycastHit hit;
+        float yRotation = 180.0f;
+        Quaternion newRotation = transform.rotation * Quaternion.Euler(0, yRotation, 0);
+        if (Input.GetKeyDown(KeyCode.E) && Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, Mathf.Infinity) && controller.isGrounded)
+        {
+            Instantiate(woodenBuilding, transform.position + (transform.forward * 10) + new Vector3(0, 2, 0), newRotation);
+           
+        }
         Movement();
         Sprint();
         Jump();
+    }
+    private void FixedUpdate()
+    {
+       
+        RaycastHit hit;
+        if(Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, Mathf.Infinity))
+        {
+           
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+            
+            Debug.Log("Did Hit");
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
+            Debug.Log("Did not Hit");
+        }
     }
 
     private void Movement()
