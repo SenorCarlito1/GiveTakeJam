@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public Button resumeButton;
     public TextMeshProUGUI resumeText;
+    public Image playerHPBar;
+    public Image lerpHPBar;
 
     public bool isPaused;
     float timeScaleOrig;
