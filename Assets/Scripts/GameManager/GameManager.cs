@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
 using UnityEngine.Rendering;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("-----UI-----")]
     public GameObject activeMenu;
     public GameObject pauseMenu;
+    public GameObject loseMenu;
     public Button resumeButton;
     public TextMeshProUGUI resumeText;
     public Image playerHPBar;
@@ -142,6 +144,9 @@ public class GameManager : MonoBehaviour
 
     public void Lose()
     {
+        isPaused = !isPaused;
+        activeMenu = loseMenu;
+        activeMenu.SetActive(isPaused);
         pauseState();
     }
 }
