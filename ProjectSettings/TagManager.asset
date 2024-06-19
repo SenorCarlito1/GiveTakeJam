@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - FirstPersonCamera
+  - mHead
+  - mNeck
+  - mTorso
+  - mStarter
+  - mPlate
   layers:
   - Default
   - TransparentFX
