@@ -112,4 +112,9 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void Lose()
+    {
+        pauseState();
+    }
 }

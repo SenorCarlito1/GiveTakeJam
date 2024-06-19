@@ -27,16 +27,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int jumpMax;
 
     Animator animator;
+    private PlayerHealth playerHealth;
 
     private void Start()
     {
         origSpeed = fowardSpeed;
         camera = GetComponentInChildren<cameraControl>();
         animator = GetComponent<Animator>();
+
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.LeftAlt)){playerHealth.TakeDamage(1);}
+
         Movement();
         Sprint();
         Jump();
