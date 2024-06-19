@@ -9,6 +9,7 @@ public class EnemyPatrol : MonoBehaviour
     public float chaseStoppingDistance = 2f; // Distance at which the enemy stops when chasing
     public float minDistanceToPlayer = 1.5f; // Minimum distance to maintain from the player
     public float memoryDuration = 3f; // Duration to remember player's last known position after losing sight
+    public float idleDuration = 2f; // Duration to stay idle between patrols
     public Transform player; // Reference to the player transform
 
     private Vector3 walkPoint;
@@ -17,10 +18,14 @@ public class EnemyPatrol : MonoBehaviour
     private bool isChasing;
     private Vector3 lastKnownPlayerPosition;
     private float memoryTimer;
+    private float idleTimer;
+    private bool isIdle;
+    private Animator animator;
 
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         SetNewWalkPoint();
     }
 
@@ -47,14 +52,24 @@ public class EnemyPatrol : MonoBehaviour
                 else
                 {
                     isChasing = false;
-                    SetNewWalkPoint();
+                    GoIdle();
                 }
             }
             else
             {
-                Patrol();
+                if (isIdle)
+                {
+                    Idle();
+                }
+                else
+                {
+                    Patrol();
+                }
             }
         }
+
+        // Update Animator's Speed parameter
+        animator.SetFloat("Speed", navAgent.velocity.magnitude);
     }
 
     private bool CanSeePlayer()
@@ -83,6 +98,7 @@ public class EnemyPatrol : MonoBehaviour
     private void ChasePlayer()
     {
         isChasing = true;
+        isIdle = false;
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         Vector3 targetPosition = player.position - directionToPlayer * minDistanceToPlayer;
         navAgent.SetDestination(targetPosition);
@@ -105,11 +121,30 @@ public class EnemyPatrol : MonoBehaviour
             if (navAgent.remainingDistance <= navAgent.stoppingDistance && !navAgent.pathPending)
             {
                 walkPointSet = false;
-                SetNewWalkPoint();
+                GoIdle();
             }
         }
         else
         {
+            SetNewWalkPoint();
+        }
+    }
+
+    private void GoIdle()
+    {
+        isIdle = true;
+        idleTimer = idleDuration;
+    }
+
+    private void Idle()
+    {
+        if (idleTimer > 0)
+        {
+            idleTimer -= Time.deltaTime;
+        }
+        else
+        {
+            isIdle = false;
             SetNewWalkPoint();
         }
     }
