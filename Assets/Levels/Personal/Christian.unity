@@ -308,10 +308,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: mPlate
       objectReference: {fileID: 0}
-    - target: {fileID: 2220495503955214924, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: m_TagString
-      value: mHead
-      objectReference: {fileID: 0}
     - target: {fileID: 2249685407614214338, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -319,14 +315,6 @@ PrefabInstance:
     - target: {fileID: 2249685407614214338, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: m_TagString
       value: mPlate
-      objectReference: {fileID: 0}
-    - target: {fileID: 2455772963018455575, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: m_TagString
-      value: mNeck
-      objectReference: {fileID: 0}
-    - target: {fileID: 2966113046789579591, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.142
       objectReference: {fileID: 0}
     - target: {fileID: 2969859725650093897, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: m_TagString
@@ -380,10 +368,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: mHead
       objectReference: {fileID: 0}
-    - target: {fileID: 4762166585940439313, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: m_TagString
-      value: mTorso
-      objectReference: {fileID: 0}
     - target: {fileID: 4777536044942441281, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: m_TagString
       value: mPlate
@@ -407,14 +391,6 @@ PrefabInstance:
     - target: {fileID: 5222212678288461317, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: m_TagString
       value: mStarter
-      objectReference: {fileID: 0}
-    - target: {fileID: 5430591406884208023, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: lockVermax
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 5430591406884208023, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: lockVermin
-      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 6124206040709234263, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: m_TagString
@@ -443,14 +419,6 @@ PrefabInstance:
     - target: {fileID: 8033073611096030703, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: m_TagString
       value: mHead
-      objectReference: {fileID: 0}
-    - target: {fileID: 8896705759285450920, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: -6846237974441282545, guid: de13a7420582ded45a8d7d3f96889aca, type: 3}
-    - target: {fileID: 8896705759285450920, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: m_CastShadows
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
