@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +20,11 @@ public class GameManager : MonoBehaviour
 
     [Header("-----Player-----")]
     public GameObject player;
-
+    public GameObject[] headModel;
+    public GameObject[] starterClothes;
+    public GameObject[] plateClothes;
+    public SkinnedMeshRenderer neckModel;
+    public SkinnedMeshRenderer torsoModel;
 
     [Header("-----UI-----")]
     public GameObject activeMenu;
@@ -45,6 +50,12 @@ public class GameManager : MonoBehaviour
                 firstPersonCamera = allCameras[i];
             }
         }
+
+        headModel = GameObject.FindGameObjectsWithTag("mHead");
+        neckModel = GameObject.FindGameObjectWithTag("mNeck").GetComponent<SkinnedMeshRenderer>();
+        torsoModel = GameObject.FindGameObjectWithTag("mTorso").GetComponent<SkinnedMeshRenderer>();
+        starterClothes = GameObject.FindGameObjectsWithTag("mStarter");
+        plateClothes = GameObject.FindGameObjectsWithTag("mPlate");
     }
 
     private void Start()
@@ -102,6 +113,13 @@ public class GameManager : MonoBehaviour
                 firstPersonCamera.gameObject.SetActive(true);
                 currCamera = firstPersonCamera;
                 Camera.SetupCurrent(currCamera);
+
+                for (int i = 0; i < headModel.Length; i++)
+                {
+                    headModel[i].GetComponent<SkinnedMeshRenderer>().shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+                }
+                torsoModel.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
+                neckModel.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
             }
             else if (currCamera == firstPersonCamera)
             {
@@ -109,6 +127,13 @@ public class GameManager : MonoBehaviour
                 firstPersonCamera.gameObject.SetActive(false);
                 currCamera = thirdPersonCamera;
                 Camera.SetupCurrent(currCamera);
+
+                for (int i = 0; i < headModel.Length; i++)
+                {
+                    headModel[i].GetComponent<SkinnedMeshRenderer>().shadowCastingMode = ShadowCastingMode.On;
+                }
+                torsoModel.shadowCastingMode = ShadowCastingMode.On;
+                neckModel.shadowCastingMode = ShadowCastingMode.On;
             }
         }
     }
