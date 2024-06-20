@@ -122,6 +122,69 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &393426045 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 174730, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+  m_PrefabInstance: {fileID: 1498335933}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &486419342 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2966113046789579591, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
+  m_PrefabInstance: {fileID: 2011451776}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &961194340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 961194341}
+  - component: {fileID: 961194342}
+  m_Layer: 0
+  m_Name: BuildPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &961194341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961194340}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.49, z: 0.31}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 486419342}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &961194342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961194340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff2fac72b2b32442a03d04baba35621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rayDistance: 50
+  buildModLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  defaultLayerInt: 8
+  rayOrigin: {fileID: 961194341}
+  buildingMatPositive: {fileID: 0}
+  buildingMatNegative: {fileID: 0}
+  gameObjectToPosition: {fileID: 393426045}
 --- !u!1 &1095537575
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +291,7 @@ GameObject:
   - component: {fileID: 1466161114}
   - component: {fileID: 1466161113}
   - component: {fileID: 1466161112}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +500,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2966113046789579591, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 961194341}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
 --- !u!1660057539 &9223372036854775807

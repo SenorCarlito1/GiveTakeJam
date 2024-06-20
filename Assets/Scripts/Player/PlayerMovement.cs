@@ -49,11 +49,11 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         float yRotation = 180.0f;
         Quaternion newRotation = transform.rotation * Quaternion.Euler(0, yRotation, 0);
-        if (Input.GetKeyDown(KeyCode.E) && Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, Mathf.Infinity) && controller.isGrounded)
-        {
-            Instantiate(woodenBuilding, transform.position + (transform.forward * 10) + new Vector3(0, 2, 0), newRotation);
+        //if (Input.GetKeyDown(KeyCode.E) && Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, Mathf.Infinity) && controller.isGrounded)
+        //{
+        //    //Instantiate(woodenBuilding, transform.position + (transform.forward * 10) + new Vector3(0, 2, 0), newRotation);
            
-        }
+        //}
         Movement();
         Sprint();
         Jump();
