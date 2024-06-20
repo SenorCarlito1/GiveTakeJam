@@ -277,7 +277,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4cd8ab8d6d66754428b775d16ebe464e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -322,6 +322,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1498335933
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 174730, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_Name
+      value: Cabin_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.8298903
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.1636658
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.805222
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401218, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
 --- !u!1001 &2011451776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -330,6 +387,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2252016631647805634, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
+      propertyPath: woodenBuilding
+      value: 
+      objectReference: {fileID: 174730, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
     - target: {fileID: 4136251544226906973, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.4784007
@@ -386,3 +447,4 @@ SceneRoots:
   - {fileID: 1095537577}
   - {fileID: 1466161115}
   - {fileID: 2011451776}
+  - {fileID: 1498335933}
