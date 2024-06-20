@@ -13,6 +13,7 @@ public class ButtonFunctions : MonoBehaviour
     public void resetLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameManager.instance.unPauseState();
 
     }
 }
