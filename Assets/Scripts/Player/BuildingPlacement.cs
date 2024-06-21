@@ -11,6 +11,7 @@ public class BuildingPlacement : MonoBehaviour
     [SerializeField] private LayerMask buildModLayerMask;
     [SerializeField] private Transform rayOrigin;
     [SerializeField] private Material buildingMatPositive;
+    [SerializeField] private Material buildingMatOriginal;
     [SerializeField] private Material buildingMatNegative;
 
     private bool inBuildMode = false;
@@ -19,9 +20,15 @@ public class BuildingPlacement : MonoBehaviour
 
     public GameObject gameObjectToPosition;
 
+    private MeshCollider[] meshColliders;
+    private MeshRenderer[] meshRenders;
+   
+
     void Start()
     {
         _camera = GameManager.instance.currCamera;
+        meshColliders = gameObjectToPosition.GetComponentsInChildren<MeshCollider>();
+        meshRenders = gameObjectToPosition.GetComponentsInChildren<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -33,21 +40,38 @@ public class BuildingPlacement : MonoBehaviour
         {
             return;
         }
-        
+
         // Changes 
         if (Input.GetKeyDown(KeyCode.F6)) inBuildMode = true;
 
         if (inBuildMode && GameManager.instance.currCamera)
         {
             gameObjectToPosition.transform.position = hitInfo.point + new Vector3(0, 3, 0);
+            for (int i = 0; i < meshColliders.Length; i++)
+            {
+                meshColliders[i].enabled = false;
+            }
+            for (int i = 0; i < meshRenders.Length; i++)
+            {
+                meshRenders[i].material = buildingMatPositive;
+            }
             if (Input.GetKey(KeyCode.R))
             {
-                gameObjectToPosition.transform.Rotate(0, 1, 0);
+                gameObjectToPosition.transform.Rotate(0, 100 * Time.deltaTime, 0);
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
-
+                for (int i = 0; i < meshRenders.Length; i++)
+                {
+                    meshRenders[i].material = buildingMatOriginal;
+                }
                 Instantiate(gameObjectToPosition, hitInfo.point + new Vector3(0, 3, 0), gameObjectToPosition.transform.rotation);
+                for (int i = 0; i < meshColliders.Length; i++)
+                {
+                    meshColliders[i].enabled = true;
+                }
+                
+
                 inBuildMode = false;
             }
         }
