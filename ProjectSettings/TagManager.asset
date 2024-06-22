@@ -10,6 +10,7 @@ TagManager:
   - mTorso
   - mStarter
   - mPlate
+  - Enemy
   layers:
   - Default
   - TransparentFX

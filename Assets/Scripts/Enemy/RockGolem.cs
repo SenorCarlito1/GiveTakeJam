@@ -24,6 +24,9 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private Transform projectileSpawnPoint;
     [SerializeField] private float throwForce = 10f;
     [SerializeField] private float throwTriggerDistance = 10f;
+    [SerializeField] private float punchDistance = 2f; // Adjust as needed
+    [SerializeField] private float punchDamageAmount = 20f; // Amount of damage to apply on punch
+    [SerializeField] private float punchKnockbackForce = 20f; // Amount of damage to apply on punch
 
     private Vector3 walkPoint;
     private bool walkPointSet;
@@ -61,8 +64,10 @@ public class EnemyPatrol : MonoBehaviour
 
             if (isChasing && !hasThrownProjectile && Vector3.Distance(transform.position, player.position) > throwTriggerDistance)
             {
-
-                animator.SetTrigger("ThrowBoulder");
+                if (CanSeePlayer())
+                {
+                    animator.SetTrigger("ThrowBoulder");
+                }
             }
 
             ChasePlayer();
@@ -96,7 +101,13 @@ public class EnemyPatrol : MonoBehaviour
         }
 
         animator.SetFloat("Speed", navAgent.velocity.magnitude);
-
+        
+        // Check punch distance and trigger punch animation
+        if (Vector3.Distance(transform.position, player.position) <= punchDistance)
+        {
+            animator.SetTrigger("Punch");
+        }
+        
         if (throwTimer > 0)
         {
             throwTimer -= Time.deltaTime;
@@ -213,8 +224,17 @@ public class EnemyPatrol : MonoBehaviour
 
     public void SpawnAndThrowProjectile()
     {
+        Vector3 directionToPlayer = (player.position - projectileSpawnPoint.position).normalized;
+
         // Spawn projectile at the projectileSpawnPoint
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+
+        // Apply force to the projectile
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(directionToPlayer * throwForce, ForceMode.Impulse);
+        }
 
         // Set the target of the ProjectileController to the player
         ProjectileController controller = projectile.GetComponent<ProjectileController>();
@@ -224,4 +244,33 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
+    // Called by animation event for punch
+    public void PerformPunch()
+    {
+        if (Vector3.Distance(transform.position, player.position) <= punchDistance)
+        {
+            // Apply damage to the player
+            player.GetComponent<PlayerHealth>().TakeDamage(punchDamageAmount);
+
+            // Apply knockback to the player
+            Vector3 knockbackDirection = (player.position - transform.position).normalized;
+            player.GetComponent<PlayerHealth>().TakeKnockback(knockbackDirection, punchKnockbackForce);
+        }
+    }
+
+
+    void OnAnimatorIK(int layerIndex)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("ThrowBoulder"))
+        {
+            RotateTowardsPlayer();
+        }
+    }
+
+    private void RotateTowardsPlayer()
+    {
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+    }
 }
