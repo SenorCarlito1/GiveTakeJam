@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     public GameObject[] plateClothes;
     public SkinnedMeshRenderer neckModel;
     public SkinnedMeshRenderer torsoModel;
+    public PlayerAttack attackScript;
+    public Animator playerAnim;
 
     [Header("-----UI-----")]
     public GameObject activeMenu;
@@ -42,6 +44,13 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
+        if (player)
+        {
+            attackScript = player.GetComponentInChildren<PlayerAttack>();
+        }
+
+        playerAnim = player.GetComponentInChildren<Animator>();
+
         timeScaleOrig = Time.timeScale;
         thirdPersonCamera = Camera.main;
         allCameras = Camera.allCameras;
