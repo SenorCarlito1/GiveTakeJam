@@ -9,6 +9,7 @@ public class ProjectileController : MonoBehaviour
     public int maxBounces = 3; // Maximum number of bounces before destroying the projectile
     public LayerMask groundLayer; // Layer mask for detecting ground
     public Transform target; // Target transform (player's position)
+    public float damageAmount = 10f; // Amount of damage to apply on collision
 
     private Rigidbody rb;
     private Vector3 startPoint;
@@ -18,6 +19,7 @@ public class ProjectileController : MonoBehaviour
 
     // Timer variables
     private float destroyTimer = 5f; // Time in seconds before projectile is destroyed
+    internal Vector3 targetPosition;
 
     void Start()
     {
@@ -65,8 +67,17 @@ public class ProjectileController : MonoBehaviour
             // Destroy the projectile if bouncing is disabled or it has exceeded the maximum bounces
             DestroyProjectile();
         }
-    }
 
+        // Check if the projectile collides with the player
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // Apply damage to the player
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
+
+            // Destroy the projectile after damaging the player
+            DestroyProjectile();
+        }
+    }
 
     void DestroyProjectile()
     {
@@ -107,5 +118,4 @@ public class ProjectileController : MonoBehaviour
 
         return velocity;
     }
-
 }

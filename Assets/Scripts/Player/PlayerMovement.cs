@@ -45,15 +45,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftAlt)){playerHealth.TakeDamage(1);}
    
-        // Player base building start
-        RaycastHit hit;
-        float yRotation = 180.0f;
-        Quaternion newRotation = transform.rotation * Quaternion.Euler(0, yRotation, 0);
-        //if (Input.GetKeyDown(KeyCode.E) && Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, Mathf.Infinity) && controller.isGrounded)
-        //{
-        //    //Instantiate(woodenBuilding, transform.position + (transform.forward * 10) + new Vector3(0, 2, 0), newRotation);
-           
-        //}
         Movement();
         Sprint();
         Jump();
@@ -61,19 +52,18 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
        
-        RaycastHit hit;
-        if(Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, Mathf.Infinity))
-        {
+        //RaycastHit hit;
+        //if(Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, Mathf.Infinity))
+        //{
            
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            
-            Debug.Log("Did Hit");
-        }
-        else
-        {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
-            Debug.Log("Did not Hit");
-        }
+        //    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
+        //    Debug.Log("Did Hit");
+        //}
+        //else
+        //{
+        //    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
+        //    Debug.Log("Did not Hit");
+        //}
     }
 
     private void Movement()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +25,9 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private Transform projectileSpawnPoint;
     [SerializeField] private float throwForce = 10f;
     [SerializeField] private float throwTriggerDistance = 10f;
+    [SerializeField] private float punchDistance = 2f; // Adjust as needed
+    [SerializeField] private float punchDamageAmount = 20f; // Amount of damage to apply on punch
+    [SerializeField] private float punchKnockbackForce = 20f; // Amount of damage to apply on punch
 
     private Vector3 walkPoint;
     private bool walkPointSet;
@@ -38,6 +42,11 @@ public class EnemyPatrol : MonoBehaviour
 
     private bool hasThrownProjectile;
     private float throwTimer;
+    private bool isThrowing;
+
+    // Player position history
+    private List<Vector3> playerPositions = new List<Vector3>();
+    private List<float> positionTimestamps = new List<float>();
 
     void Start()
     {
@@ -54,15 +63,21 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
+        // Update player position history
+        UpdatePlayerPositionHistory();
+
         if (CanSeePlayer())
         {
             lastKnownPlayerPosition = player.position;
             memoryTimer = memoryDuration;
 
-            if (isChasing && !hasThrownProjectile && Vector3.Distance(transform.position, player.position) > throwTriggerDistance)
+            if (isChasing && Vector3.Distance(transform.position, player.position) > throwTriggerDistance)
             {
-
-                animator.SetTrigger("ThrowBoulder");
+                if (!isThrowing && !hasThrownProjectile && IsPlayerInThrowArc())
+                {
+                    isThrowing = true;
+                    animator.SetTrigger("ThrowBoulder");
+                }
             }
 
             ChasePlayer();
@@ -97,16 +112,20 @@ public class EnemyPatrol : MonoBehaviour
 
         animator.SetFloat("Speed", navAgent.velocity.magnitude);
 
+        // Check punch distance and trigger punch animation
+        if (Vector3.Distance(transform.position, player.position) <= punchDistance)
+        {
+            animator.SetTrigger("Punch");
+        }
+
         if (throwTimer > 0)
         {
             throwTimer -= Time.deltaTime;
             if (throwTimer <= 0)
             {
-                //SpawnAndThrowProjectile();
-                hasThrownProjectile = true;
+                hasThrownProjectile = false;
             }
         }
-        hasThrownProjectile = false;
     }
 
     private bool CanSeePlayer()
@@ -123,6 +142,7 @@ public class EnemyPatrol : MonoBehaviour
                 {
                     if (hit.transform == player)
                     {
+                        lastKnownPlayerPosition = player.position; // Update last known position
                         return true;
                     }
                 }
@@ -130,6 +150,20 @@ public class EnemyPatrol : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool IsPlayerInThrowArc()
+    {
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float angleBetweenEnemyAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        return angleBetweenEnemyAndPlayer <= 45f; // 90 degrees arc
+    }
+
+    private bool IsTargetWithinFOV(Vector3 targetPosition)
+    {
+        Vector3 directionToTarget = (targetPosition - transform.position).normalized;
+        float angleBetweenEnemyAndTarget = Vector3.Angle(transform.forward, directionToTarget);
+        return angleBetweenEnemyAndTarget < fieldOfView / 2;
     }
 
     private void ChasePlayer()
@@ -213,15 +247,112 @@ public class EnemyPatrol : MonoBehaviour
 
     public void SpawnAndThrowProjectile()
     {
+        Transform targetTransform = player;
+        Vector3 targetPosition = player.position;
+
+        // Determine if the player is within sight
+        if (!CanSeePlayer())
+        {
+            targetPosition = GetPositionOneSecondAgo();
+        }
+
+        // Check if the target position is within the FOV
+        if (!IsTargetWithinFOV(targetPosition))
+        {
+            isThrowing = false;
+            return; // Do not throw the projectile if the target is out of FOV
+        }
+
+        // Create an empty GameObject at the target position if player is not visible
+        if (targetTransform == null)
+        {
+            GameObject lastKnownPositionMarker = new GameObject("LastKnownPositionMarker");
+            lastKnownPositionMarker.transform.position = targetPosition;
+            targetTransform = lastKnownPositionMarker.transform;
+
+            // Optionally, you can destroy this GameObject after a short duration to clean up
+            Destroy(lastKnownPositionMarker, 5f); // Adjust the duration as needed
+        }
+
+        Vector3 directionToTarget = (targetTransform.position - projectileSpawnPoint.position).normalized;
+
         // Spawn projectile at the projectileSpawnPoint
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
 
-        // Set the target of the ProjectileController to the player
+        // Apply force to the projectile
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(directionToTarget * throwForce, ForceMode.Impulse);
+        }
+
+        // Set the target of the ProjectileController to the determined transform
         ProjectileController controller = projectile.GetComponent<ProjectileController>();
         if (controller != null)
         {
-            controller.target = player;
+            controller.target = targetTransform;
+        }
+
+        // Reset throw flags
+        isThrowing = false;
+        hasThrownProjectile = true;
+        throwTimer = 1f; // Cooldown timer before the next throw can happen
+    }
+
+    private void UpdatePlayerPositionHistory()
+    {
+        playerPositions.Add(player.position);
+        positionTimestamps.Add(Time.time);
+
+        // Remove positions older than 5 seconds to keep the list manageable
+        while (positionTimestamps.Count > 0 && Time.time - positionTimestamps[0] > 5f)
+        {
+            playerPositions.RemoveAt(0);
+            positionTimestamps.RemoveAt(0);
         }
     }
 
+    private Vector3 GetPositionOneSecondAgo()
+    {
+        float targetTime = Time.time - 1f;
+
+        for (int i = positionTimestamps.Count - 1; i >= 0; i--)
+        {
+            if (positionTimestamps[i] <= targetTime)
+            {
+                return playerPositions[i];
+            }
+        }
+
+        return lastKnownPlayerPosition; // Fallback if no position is found
+    }
+
+    // Called by animation event for punch
+    public void PerformPunch()
+    {
+        if (Vector3.Distance(transform.position, player.position) <= punchDistance)
+        {
+            // Apply damage to the player
+            player.GetComponent<PlayerHealth>().TakeDamage(punchDamageAmount);
+
+            // Apply knockback to the player
+            Vector3 knockbackDirection = (player.position - transform.position).normalized;
+            player.GetComponent<PlayerHealth>().TakeKnockback(knockbackDirection, punchKnockbackForce);
+        }
+    }
+
+    void OnAnimatorIK(int layerIndex)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("ThrowBoulder"))
+        {
+            RotateTowardsPlayer();
+        }
+    }
+
+    private void RotateTowardsPlayer()
+    {
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+    }
 }

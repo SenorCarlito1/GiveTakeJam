@@ -41,7 +41,14 @@ public class PlayerHealth : MonoBehaviour, IDamage
             GameManager.instance.Lose();
         }
     }
-
+    public void TakeKnockback(Vector3 direction, float force)
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(direction * force, ForceMode.Impulse);
+        }
+    }
     void updateHealthUI()
     {
         float backfill = GameManager.instance.lerpHPBar.fillAmount;
