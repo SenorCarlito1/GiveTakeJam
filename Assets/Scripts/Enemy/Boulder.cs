@@ -19,6 +19,7 @@ public class ProjectileController : MonoBehaviour
 
     // Timer variables
     private float destroyTimer = 5f; // Time in seconds before projectile is destroyed
+    internal Vector3 targetPosition;
 
     void Start()
     {
