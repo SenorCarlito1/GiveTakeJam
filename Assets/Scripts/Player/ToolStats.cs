@@ -12,6 +12,7 @@ public class ToolStats : ScriptableObject
     [SerializeField] public float durability;
     //[SerializeField] public Collider hitCollider;
     [SerializeField] public float attackInterval;
+    //public MeshCollider collider;
     public GameObject model;
     public AudioClip swingSound;
     [Range(0,1)] public float swingSoundVol;
