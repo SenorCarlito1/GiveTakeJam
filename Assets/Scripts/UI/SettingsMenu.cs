@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -62,9 +63,19 @@ public class SettingsMenu : MonoBehaviour
 
     public void Back()
     {
-        GameManager.instance.activeMenu.SetActive(false);
-        GameManager.instance.activeMenu = null;
-        GameManager.instance.activeMenu = GameManager.instance.pauseMenu;
-        GameManager.instance.activeMenu.SetActive(true);
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            MainMenuManager.instance.activeMenu.SetActive(false);
+            MainMenuManager.instance.activeMenu = null;
+            MainMenuManager.instance.mainMenu.SetActive(true);
+        }
+        else
+        {
+            GameManager.instance.activeMenu.SetActive(false);
+            GameManager.instance.activeMenu = null;
+            GameManager.instance.activeMenu = GameManager.instance.pauseMenu;
+            GameManager.instance.activeMenu.SetActive(true);
+        }
+        
     }
 }
