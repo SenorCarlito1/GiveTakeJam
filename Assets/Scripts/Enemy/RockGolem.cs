@@ -41,6 +41,7 @@ public class EnemyPatrol : MonoBehaviour
 
     private bool hasThrownProjectile;
     private float throwTimer;
+    private bool isThrowing;
 
     void Start()
     {
@@ -62,10 +63,11 @@ public class EnemyPatrol : MonoBehaviour
             lastKnownPlayerPosition = player.position;
             memoryTimer = memoryDuration;
 
-            if (isChasing && !hasThrownProjectile && Vector3.Distance(transform.position, player.position) > throwTriggerDistance)
+            if (isChasing && Vector3.Distance(transform.position, player.position) > throwTriggerDistance)
             {
-                if (CanSeePlayer())
+                if (!isThrowing && !hasThrownProjectile && IsPlayerInThrowArc())
                 {
+                    isThrowing = true;
                     animator.SetTrigger("ThrowBoulder");
                 }
             }
@@ -101,23 +103,21 @@ public class EnemyPatrol : MonoBehaviour
         }
 
         animator.SetFloat("Speed", navAgent.velocity.magnitude);
-        
+
         // Check punch distance and trigger punch animation
         if (Vector3.Distance(transform.position, player.position) <= punchDistance)
         {
             animator.SetTrigger("Punch");
         }
-        
+
         if (throwTimer > 0)
         {
             throwTimer -= Time.deltaTime;
             if (throwTimer <= 0)
             {
-                //SpawnAndThrowProjectile();
-                hasThrownProjectile = true;
+                hasThrownProjectile = false;
             }
         }
-        hasThrownProjectile = false;
     }
 
     private bool CanSeePlayer()
@@ -141,6 +141,13 @@ public class EnemyPatrol : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool IsPlayerInThrowArc()
+    {
+        Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float angleBetweenEnemyAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        return angleBetweenEnemyAndPlayer <= 45f; // 90 degrees arc
     }
 
     private void ChasePlayer()
@@ -242,6 +249,11 @@ public class EnemyPatrol : MonoBehaviour
         {
             controller.target = player;
         }
+
+        // Reset throw flags
+        isThrowing = false;
+        hasThrownProjectile = true;
+        throwTimer = 1f; // Cooldown timer before the next throw can happen
     }
 
     // Called by animation event for punch
@@ -257,7 +269,6 @@ public class EnemyPatrol : MonoBehaviour
             player.GetComponent<PlayerHealth>().TakeKnockback(knockbackDirection, punchKnockbackForce);
         }
     }
-
 
     void OnAnimatorIK(int layerIndex)
     {
