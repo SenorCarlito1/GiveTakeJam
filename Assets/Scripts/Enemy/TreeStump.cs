@@ -28,6 +28,8 @@ public class TreeStump : MonoBehaviour
     private EnemyHealth enemyHealth;
     private Transform player;
 
+    private bool isAttacking; // Flag to indicate if currently attacking
+
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
@@ -57,11 +59,15 @@ public class TreeStump : MonoBehaviour
             lastKnownPlayerPosition = player.position;
             memoryTimer = sightRange;
 
-            ChasePlayer();
+            // Only chase if not currently attacking
+            if (!isAttacking)
+            {
+                ChasePlayer();
+            }
         }
         else
         {
-            if (isChasing)
+            if (isChasing && !isAttacking)
             {
                 if (memoryTimer > 0)
                 {
@@ -74,7 +80,7 @@ public class TreeStump : MonoBehaviour
                     Patrol();
                 }
             }
-            else
+            else if (!isAttacking)
             {
                 Patrol();
             }
@@ -82,9 +88,27 @@ public class TreeStump : MonoBehaviour
 
         animator.SetFloat("Speed", navAgent.velocity.magnitude);
 
-        if (Vector3.Distance(transform.position, player.position) <= spinAttackDistance)
+        // Check if the spin attack animation is currently playing
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("SpinAttack"))
         {
-            animator.SetTrigger("SpinAttack");
+            // Set attacking flag to true during attack animation
+            isAttacking = true;
+
+            // Stop chasing and rotating towards player during attack animation
+            navAgent.isStopped = true;
+            navAgent.velocity = Vector3.zero;
+            RotateTowards(transform.forward); // Rotate towards current facing direction
+        }
+        else
+        {
+            // Reset attacking flag when not attacking
+            isAttacking = false;
+
+            // Regular behavior when not in spin attack
+            if (Vector3.Distance(transform.position, player.position) <= spinAttackDistance)
+            {
+                animator.SetTrigger("SpinAttack");
+            }
         }
     }
 
@@ -117,8 +141,6 @@ public class TreeStump : MonoBehaviour
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         Vector3 targetPosition = player.position - directionToPlayer * minDistanceToPlayer;
         navAgent.SetDestination(targetPosition);
-
-        RotateTowards(player.position);
 
         if (Vector3.Distance(transform.position, player.position) <= chaseStoppingDistance)
         {
@@ -187,14 +209,6 @@ public class TreeStump : MonoBehaviour
         {
             // Apply damage to the player
             player.GetComponent<PlayerHealth>().TakeDamage(spinAttackDamage);
-        }
-    }
-
-    void OnAnimatorIK(int layerIndex)
-    {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("SpinAttack"))
-        {
-            RotateTowards(player.position);
         }
     }
 }
