@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     public GameObject activeMenu;
     public GameObject pauseMenu;
     public GameObject loseMenu;
+    public GameObject settingsMenu;
+    public GameObject playerUI;
     public Button resumeButton;
     public TextMeshProUGUI resumeText;
     public Image playerHPBar;
@@ -87,6 +89,7 @@ public class GameManager : MonoBehaviour
                 isPaused = !isPaused;
                 activeMenu = pauseMenu;
                 activeMenu.SetActive(isPaused);
+                playerUI.SetActive(false);
                 pauseState();
             }
             else if(activeMenu != null && activeMenu == pauseMenu)
@@ -113,6 +116,7 @@ public class GameManager : MonoBehaviour
         isPaused = !isPaused;
         activeMenu.SetActive(false);
         activeMenu = null;
+        playerUI.SetActive(true);
     }
 
     private void ChangePOV()

@@ -14,6 +14,14 @@ public class ButtonFunctions : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameManager.instance.unPauseState();
+    }
+
+    public void openSettings()
+    {
+        GameManager.instance.activeMenu.SetActive(false);   
+        GameManager.instance.activeMenu = null;
+        GameManager.instance.activeMenu = GameManager.instance.settingsMenu;
+        GameManager.instance.activeMenu.SetActive(true);
 
     }
 }
