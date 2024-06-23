@@ -12,8 +12,8 @@ public class ToolPickUp : MonoBehaviour
 
     private void Start()
     {
-        model = tool.model.GetComponent<MeshFilter>();
-        mat = tool.model.GetComponent<MeshRenderer>();
+        //model = tool.model.GetComponent<MeshFilter>();
+        //mat = tool.model.GetComponent<MeshRenderer>();
         //inRange = false;
     }
 

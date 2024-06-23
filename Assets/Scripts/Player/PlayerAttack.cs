@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attackInterval;
     [SerializeField] private MeshFilter toolModel;
     [SerializeField] private MeshRenderer toolMat;
+    [SerializeField] private MeshCollider toolCollider;
 
     //[Header("----Tool Locker----")]
     //[SerializeField] GameObject swordPrefab;
@@ -38,7 +39,8 @@ public class PlayerAttack : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            anim.SetTrigger("Attack");   
+            anim.SetTrigger("Attack");
+            gameObject.GetComponent<MeshCollider>().enabled = true;
         }
     }
 
@@ -62,15 +64,7 @@ public class PlayerAttack : MonoBehaviour
 
         toolModel.mesh = toolStat.model.GetComponent<MeshFilter>().sharedMesh;
         toolMat.material = toolStat.model.GetComponent<MeshRenderer>().sharedMaterial;
-    }
-
-    public void ColliderOn()
-    {
-        //weaponReach.gameObject.SetActive(true);
-    }
-
-    public void ColliderOff()
-    {
-       // weaponReach.gameObject.SetActive(false);
+        toolCollider.sharedMesh = toolModel.mesh;
+        gameObject.GetComponent<MeshCollider>().enabled = true;
     }
 }
