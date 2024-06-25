@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     public GameObject activeMenu;
     public GameObject pauseMenu;
     public GameObject loseMenu;
+    public GameObject inventoryMenu;
     public GameObject settingsMenu;
     public GameObject playerUI;
     public Button resumeButton;
@@ -95,6 +96,20 @@ public class GameManager : MonoBehaviour
             else if(activeMenu != null && activeMenu == pauseMenu)
             {
                 unPauseState();
+            }
+        }
+        if(Input.GetButtonDown("Inventory"))
+        {
+            if(activeMenu != null && activeMenu == inventoryMenu)
+            {
+                activeMenu.SetActive(false);
+                activeMenu = null;
+            }
+            else if(activeMenu == null)
+            {
+                activeMenu = inventoryMenu;
+                inventoryMenu.GetComponentInChildren<DisplayInventory>().CreateDisplay();
+                activeMenu.SetActive(true);
             }
         }
         
