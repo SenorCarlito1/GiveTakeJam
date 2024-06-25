@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.PackageManager;
@@ -13,8 +14,11 @@ public class BuildingPlacement : MonoBehaviour
     [SerializeField] private Material buildingMatPositive;
     [SerializeField] private Material buildingMatOriginal;
     [SerializeField] private Material buildingMatNegative;
+    public GameObject[] buildingList = new GameObject[2];
 
     private bool inBuildMode = false;
+
+    private int selectedBuilding = 0;
 
     private Camera _camera;
 
@@ -22,11 +26,14 @@ public class BuildingPlacement : MonoBehaviour
 
     private MeshCollider[] meshColliders;
     private MeshRenderer[] meshRenders;
-   
+
+
+
 
     void Start()
     {
         _camera = GameManager.instance.currCamera;
+
         meshColliders = gameObjectToPosition.GetComponentsInChildren<MeshCollider>();
         meshRenders = gameObjectToPosition.GetComponentsInChildren<MeshRenderer>();
     }
@@ -41,44 +48,98 @@ public class BuildingPlacement : MonoBehaviour
             return;
         }
 
-        // Changes 
+        // Enables build mode
         if (Input.GetKeyDown(KeyCode.F6)) inBuildMode = true;
+
+        SwitchBuilding();
 
         if (inBuildMode && GameManager.instance.currCamera)
         {
-            gameObjectToPosition.transform.position = hitInfo.point + new Vector3(0, 3, 0);
-            for (int i = 0; i < meshColliders.Length; i++)
-            {
-                meshColliders[i].enabled = false;
-            }
-            for (int i = 0; i < meshRenders.Length; i++)
-            {
-                meshRenders[i].material = buildingMatPositive;
-            }
-            if (Input.GetKey(KeyCode.R))
-            {
-                gameObjectToPosition.transform.Rotate(0, 100 * Time.deltaTime, 0);
-            }
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                for (int i = 0; i < meshRenders.Length; i++)
-                {
-                    meshRenders[i].material = buildingMatOriginal;
-                }
-                Instantiate(gameObjectToPosition, hitInfo.point + new Vector3(0, 3, 0), gameObjectToPosition.transform.rotation);
-                for (int i = 0; i < meshColliders.Length; i++)
-                {
-                    meshColliders[i].enabled = true;
-                }
-                
 
-                inBuildMode = false;
+            if (selectedBuilding == 2)
+            {
+                gameObjectToPosition.transform.position = hitInfo.point + new Vector3(0, 2, 0);
             }
+            else if (selectedBuilding == 0 || selectedBuilding == 1)
+            {
+                gameObjectToPosition.transform.position = hitInfo.point + new Vector3(0, 3, 0);
+            }
+            ChangeMeshProperties();
+            HandleInput(hitInfo);
+        }
+    }
+
+    private void HandleInput(RaycastHit hitInfo)
+    {
+        if (Input.GetKey(KeyCode.R))
+        {
+            gameObjectToPosition.transform.Rotate(0, 100 * Time.deltaTime, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SpawnBuilding(hitInfo);
+        }
+    }
+
+    private void ChangeMeshProperties()
+    {
+        for (int i = 0; i < meshColliders.Length; i++)
+        {
+            meshColliders[i].enabled = false;
+        }
+        for (int i = 0; i < meshRenders.Length; i++)
+        {
+            meshRenders[i].material = buildingMatPositive;
+        }
+    }
+
+    private void SwitchBuilding()
+    {
+        if (Input.mouseScrollDelta.y > 0 && selectedBuilding < buildingList.Length - 1)
+        {
+            selectedBuilding++;
+            ChangeBuilding();
+            Debug.Log("UP current Index is " + selectedBuilding);
+
+        }
+        else if (Input.mouseScrollDelta.y < 0 && selectedBuilding > 0)
+        {
+            selectedBuilding--;
+            ChangeBuilding();
+            Debug.Log("DOWN current Index is " + selectedBuilding);
+        }
+
+    }
+
+    private void ChangeBuilding()
+    {
+        gameObjectToPosition = buildingList[selectedBuilding].gameObject;
+        meshColliders = buildingList[selectedBuilding].GetComponentsInChildren<MeshCollider>();
+        meshRenders = buildingList[selectedBuilding].GetComponentsInChildren<MeshRenderer>();
+    }
+
+    private void SpawnBuilding(RaycastHit hitInfo)
+    {
+        for (int i = 0; i < meshRenders.Length; i++)
+        {
+            meshRenders[i].material = buildingMatOriginal;
+        }
+
+        if (selectedBuilding == 2)
+        {
+            Instantiate(gameObjectToPosition, hitInfo.point + new Vector3(0, 2, 0), gameObjectToPosition.transform.rotation);
+        }
+        else if (selectedBuilding == 0 || selectedBuilding == 1)
+        {
+            gameObjectToPosition.transform.position = hitInfo.point + new Vector3(0, 3, 0);
+        }
+        for (int i = 0; i < meshColliders.Length; i++)
+        {
+            meshColliders[i].enabled = true;
         }
 
 
-
-
+        inBuildMode = false;
     }
     private void FixedUpdate()
     {
@@ -89,12 +150,12 @@ public class BuildingPlacement : MonoBehaviour
         {
 
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-            Debug.Log("Did Hit");
+            //Debug.Log("Did Hit");
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
-            Debug.Log("Did not Hit");
+            //Debug.Log("Did not Hit");
         }
     }
     private bool IsRayHit(LayerMask layerMask, out RaycastHit hitInfo)
