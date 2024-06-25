@@ -5,10 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonFunctions : MonoBehaviour
 {
-    public void resume()
-    {
-        GameManager.instance.unPauseState();
-    }
+    
 
     public void resetLevel()
     {
@@ -16,12 +13,5 @@ public class ButtonFunctions : MonoBehaviour
         GameManager.instance.unPauseState();
     }
 
-    public void openSettings()
-    {
-        GameManager.instance.activeMenu.SetActive(false);   
-        GameManager.instance.activeMenu = null;
-        GameManager.instance.activeMenu = GameManager.instance.settingsMenu;
-        GameManager.instance.activeMenu.SetActive(true);
-
-    }
+    
 }
