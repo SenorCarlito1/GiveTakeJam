@@ -13,7 +13,10 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attackInterval;
     [SerializeField] private MeshFilter toolModel;
     [SerializeField] private MeshRenderer toolMat;
-    [SerializeField] private MeshCollider toolCollider;
+    [SerializeField] public MeshCollider toolCollider;
+    //[SerializeField] public BoxCollider SwordCollider;
+    //[SerializeField] public BoxCollider PickCollider;
+    //[SerializeField] public BoxCollider AxeCollider;
 
     //[Header("----Tool Locker----")]
     //[SerializeField] GameObject swordPrefab;
@@ -40,15 +43,36 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             anim.SetTrigger("Attack");
-            gameObject.GetComponent<MeshCollider>().enabled = true;
+            //gameObject.GetComponent<MeshCollider>().enabled = true;
+            //toolCollider.enabled = true;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.isTrigger)
         {
-            other.GetComponent<EnemyHealth>().TakeDamage(damage);
+            return;
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            return;
+        }
+
+        IDamage dam = other.GetComponent<IDamage>();
+        //PlayerHealth pd = other.GetComponent<PlayerHealth>();
+        //EnemyHealth ed = other.GetComponent<EnemyHealth>();
+
+        //dam.TakeDamage(damage);
+        //pd.TakeDamage(damage);
+        //ed.TakeDamage(damage);
+
+        if (dam != null)
+        {
+            dam.TakeDamage(damage);
+            //pd.TakeDamage(damage);
+            //ed.TakeDamage(damage);
         }
     }
 
@@ -64,7 +88,22 @@ public class PlayerAttack : MonoBehaviour
 
         toolModel.mesh = toolStat.model.GetComponent<MeshFilter>().sharedMesh;
         toolMat.material = toolStat.model.GetComponent<MeshRenderer>().sharedMaterial;
+
+        //switch (toolStat.serialNumber)
+        //{
+        //    case 1:
+        //        toolCollider = SwordCollider;
+        //        break;
+        //    case 2:
+        //        toolCollider = PickCollider;
+        //        break;
+        //    case 3:
+        //        toolCollider = AxeCollider;
+        //        break;
+        //}
+
         toolCollider.sharedMesh = toolModel.mesh;
-        gameObject.GetComponent<MeshCollider>().enabled = true;
+        gameObject.GetComponent<MeshCollider>().enabled = false;
+        //toolCollider.enabled = false;
     }
 }
