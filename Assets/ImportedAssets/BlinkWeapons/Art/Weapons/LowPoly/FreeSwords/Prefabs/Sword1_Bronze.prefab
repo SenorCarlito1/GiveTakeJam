@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7944377688359503775}
   - component: {fileID: 5619538101591063014}
   - component: {fileID: 8557802774434633560}
+  - component: {fileID: 4154729913004413816}
+  - component: {fileID: 8646234173786672684}
   m_Layer: 0
   m_Name: Sword1_Bronze
   m_TagString: Untagged
@@ -119,3 +121,28 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.1484946
   m_Center: {x: 0.14483118, y: 0.4795637, z: -0.11188209}
+--- !u!114 &4154729913004413816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8449004803641222730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8e5dd51c65ad24ea1303bd61337e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8646234173786672684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8449004803641222730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba364805f8750c4ba77f8a825758bf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: f138632f71efc1747adf5f16fb7bca60, type: 2}
