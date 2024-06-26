@@ -202,7 +202,6 @@ public class GruntEnemy : MonoBehaviour
     {
         player.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
     }
-
     // Reset attack flag, called by animation event or timer
     public void ResetAttackFlag()
     {

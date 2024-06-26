@@ -14,9 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CharacterController controller;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private GameObject woodenBuilding;
-    private cameraControl camera;
+    //private cameraControl camera;
     
-
 
     [Header("----Movement Parameters----")]
     [SerializeField] private float fowardSpeed;
@@ -31,14 +30,16 @@ public class PlayerMovement : MonoBehaviour
 
     Animator animator;
     private PlayerHealth playerHealth;
+    private PlayerAttack attackScript;
 
     private void Start()
     {
         origSpeed = fowardSpeed;
-        camera = GetComponentInChildren<cameraControl>();
+        //camera = GetComponentInChildren<cameraControl>();
         animator = GetComponent<Animator>();
 
         playerHealth = GetComponent<PlayerHealth>();
+        attackScript = GetComponentInChildren<PlayerAttack>();
     }
 
     private void Update()
@@ -129,5 +130,15 @@ public class PlayerMovement : MonoBehaviour
             jumpedTimes++;
             playerVeclocity.y = jumpHeight;
         }
+    }
+
+    public void ColliderOn()
+    {
+        attackScript.toolCollider.enabled = true;
+    }
+
+    public void ColliderOff()
+    {
+        attackScript.toolCollider.enabled = false;
     }
 }

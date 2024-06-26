@@ -348,7 +348,11 @@ public class EnemyPatrol : MonoBehaviour
             RotateTowardsPlayer();
         }
     }
-
+    public void TakeDamageAnimation()
+    {
+        // Trigger your damage animation using the Animator component
+        animator.SetTrigger("TakeDamage");
+    }
     private void RotateTowardsPlayer()
     {
         Vector3 directionToPlayer = (player.position - transform.position).normalized;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, IDamage
 {
-    [Header("----Player Health----")]
+    [Header("----Enemy Health----")]
     [SerializeField] public float maxHealth;
     public float currHealth;
     private float origHealth;
@@ -19,13 +19,13 @@ public class EnemyHealth : MonoBehaviour, IDamage
     {
         currHealth -= dmg;
 
+        EnemyPatrol rockGolem = GetComponent<EnemyPatrol>();
+        if (rockGolem != null)
+        {
+            rockGolem.TakeDamageAnimation(); 
+        }
         //make sure to put in audio to play for getting hurt
 
         //make sure to play animation or flash red for getting hurt
-
-        if (currHealth <= 0)
-        {
-            GameManager.instance.Lose();
-        }
     }
 }
