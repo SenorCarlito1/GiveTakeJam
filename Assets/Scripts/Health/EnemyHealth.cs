@@ -19,6 +19,11 @@ public class EnemyHealth : MonoBehaviour, IDamage
     {
         currHealth -= dmg;
 
+        EnemyPatrol rockGolem = GetComponent<EnemyPatrol>();
+        if (rockGolem != null)
+        {
+            rockGolem.TakeDamageAnimation(); 
+        }
         //make sure to put in audio to play for getting hurt
 
         //make sure to play animation or flash red for getting hurt
