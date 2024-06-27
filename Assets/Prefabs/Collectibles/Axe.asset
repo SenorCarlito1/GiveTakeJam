@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af61bc65ffd73f64fa495e0c46f05f27, type: 3}
-  m_Name: Sword
+  m_Name: Axe
   m_EditorClassIdentifier: 
-  serialNumber: 1
-  damage: 10
-  durability: 10
-  attackInterval: 1.5
-  model: {fileID: 9173528856287518567, guid: 858838b24bc966b4a80115f5126366e3, type: 3}
+  serialNumber: 3
+  damage: 7
+  durability: 8
+  attackInterval: 0.9
+  model: {fileID: 350699949567075205, guid: 345c15a54fae06b478c2b0af8e371df3, type: 3}
   swingSound: {fileID: 0}
   swingSoundVol: 0
   hitSound: {fileID: 0}
