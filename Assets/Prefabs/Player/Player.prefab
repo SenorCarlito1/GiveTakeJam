@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2844633632808355008}
   - component: {fileID: 2040176141276442380}
   - component: {fileID: 5933452001666635878}
-  - component: {fileID: 2757967245229061767}
+  - component: {fileID: 2439764955983261119}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -53,10 +53,7 @@ MonoBehaviour:
   attackInterval: 0
   toolModel: {fileID: 5933452001666635878}
   toolMat: {fileID: 2040176141276442380}
-  toolCollider: {fileID: 0}
-  SwordCollider: {fileID: 2757967245229061767}
-  PickCollider: {fileID: 0}
-  AxeCollider: {fileID: 0}
+  toolCollider: {fileID: 2439764955983261119}
 --- !u!23 &2040176141276442380
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -107,8 +104,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788119183008526906}
   m_Mesh: {fileID: 0}
---- !u!65 &2757967245229061767
-BoxCollider:
+--- !u!64 &2439764955983261119
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -125,9 +122,10 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.2, z: 1.1043025}
-  m_Center: {x: 0.000001136489, y: -0.00000010086666, z: 0.3021525}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &1923194328478872628
 GameObject:
   m_ObjectHideFlags: 0

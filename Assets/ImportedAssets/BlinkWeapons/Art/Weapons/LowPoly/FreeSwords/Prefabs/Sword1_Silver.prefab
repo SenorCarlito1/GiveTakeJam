@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5619538101591063014}
   - component: {fileID: 8557802774434633560}
   m_Layer: 0
-  m_Name: Sword1_Bronze
+  m_Name: Sword1_Silver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 603aa49c288eb5a499ecadfa9d63e3c6, type: 2}
+  - {fileID: 2100000, guid: fa5baed6be3065a459482872af5d2796, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
