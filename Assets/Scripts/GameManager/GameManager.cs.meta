@@ -3,7 +3,26 @@ guid: d3372fd59c7703148aaba8f58afcb6c7
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - firstPersonCamera: {instanceID: 0}
+  - thirdPersonCamera: {instanceID: 0}
+  - currCamera: {instanceID: 0}
+  - player: {instanceID: 0}
+  - neckModel: {instanceID: 0}
+  - torsoModel: {instanceID: 0}
+  - attackScript: {instanceID: 0}
+  - playerAnim: {instanceID: 0}
+  - activeMenu: {instanceID: 0}
+  - pauseMenu: {instanceID: 0}
+  - loseMenu: {instanceID: 0}
+  - inventoryMenu: {instanceID: 0}
+  - settingsMenu: {instanceID: 0}
+  - playerUI: {instanceID: 0}
+  - resumeButton: {instanceID: 0}
+  - resumeText: {instanceID: 0}
+  - playerHPBar: {instanceID: 0}
+  - lerpHPBar: {instanceID: 0}
+  - rockGolemBoulderPrefab: {fileID: 8448845716093906234, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

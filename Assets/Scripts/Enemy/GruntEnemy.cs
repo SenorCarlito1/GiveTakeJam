@@ -19,7 +19,7 @@ public class GruntEnemy : MonoBehaviour
     [Header("---Behavior Settings---")]
     [SerializeField] private float memoryDuration = 3f;
     [SerializeField] private float idleDuration = 2f;
-    [SerializeField] private Transform player;
+    [SerializeField] private GameObject player; // Changed to GameObject
 
     [Header("---Attack Settings---")]
     [SerializeField] private float punchDistance = 2f; // Distance at which the enemy will attack
@@ -40,6 +40,7 @@ public class GruntEnemy : MonoBehaviour
     {
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player"); // Find player GameObject
         SetNewWalkPoint();
         hasAttacked = false;
     }
@@ -48,7 +49,7 @@ public class GruntEnemy : MonoBehaviour
     {
         if (CanSeePlayer())
         {
-            lastKnownPlayerPosition = player.position;
+            lastKnownPlayerPosition = player.transform.position;
             memoryTimer = memoryDuration;
             ChasePlayer();
         }
@@ -83,7 +84,7 @@ public class GruntEnemy : MonoBehaviour
         animator.SetFloat("Speed", navAgent.velocity.magnitude);
 
         // Trigger attack if within punch distance and hasn't attacked yet
-        if (Vector3.Distance(transform.position, player.position) <= punchDistance && !hasAttacked)
+        if (Vector3.Distance(transform.position, player.transform.position) <= punchDistance && !hasAttacked)
         {
             animator.SetTrigger("Attack");
             hasAttacked = true; // Set flag to true to prevent repeated attacks
@@ -92,9 +93,9 @@ public class GruntEnemy : MonoBehaviour
 
     private bool CanSeePlayer()
     {
-        if (Vector3.Distance(transform.position, player.position) < sightRange)
+        if (Vector3.Distance(transform.position, player.transform.position) < sightRange)
         {
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
             float angleBetweenEnemyAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
             if (angleBetweenEnemyAndPlayer < fieldOfView / 2)
@@ -102,9 +103,9 @@ public class GruntEnemy : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, directionToPlayer, out hit, sightRange))
                 {
-                    if (hit.transform == player)
+                    if (hit.transform == player.transform)
                     {
-                        lastKnownPlayerPosition = player.position; // Update last known position
+                        lastKnownPlayerPosition = player.transform.position; // Update last known position
                         return true;
                     }
                 }
@@ -120,11 +121,11 @@ public class GruntEnemy : MonoBehaviour
         isIdle = false;
         navAgent.speed = runSpeed; // Increase speed when chasing
         animator.SetBool("isRunning", true); // Switch to run animation
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        Vector3 targetPosition = player.position - directionToPlayer * minDistanceToPlayer;
+        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+        Vector3 targetPosition = player.transform.position - directionToPlayer * minDistanceToPlayer;
         navAgent.SetDestination(targetPosition);
 
-        if (Vector3.Distance(transform.position, player.position) <= chaseStoppingDistance)
+        if (Vector3.Distance(transform.position, player.transform.position) <= chaseStoppingDistance)
         {
             Debug.Log("Player too close! Implement attack or game over logic.");
         }
@@ -200,11 +201,37 @@ public class GruntEnemy : MonoBehaviour
     // Method to deal damage to the player, called by animation event
     public void DealDamageToPlayer()
     {
-        player.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
+        if (IsPlayerInFront())
+        {
+            Debug.Log("Enemy dealing damage to player.");
+            player.GetComponent<PlayerHealth>().TakeDamage(damageAmount);
+        }
+        else
+        {
+            Debug.Log("Player not in front, no damage dealt.");
+        }
     }
+
+    public void TakeDamageAnimation()
+    {
+        // Trigger your damage animation using the Animator component
+        animator.SetTrigger("TakeDamage");
+    }
+    public void DeathAnimation()
+    {
+        animator.SetTrigger("Die");
+    }
+
     // Reset attack flag, called by animation event or timer
     public void ResetAttackFlag()
     {
         hasAttacked = false;
+    }
+
+    private bool IsPlayerInFront()
+    {
+        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+        float angleBetweenEnemyAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        return angleBetweenEnemyAndPlayer < fieldOfView / 2;
     }
 }
