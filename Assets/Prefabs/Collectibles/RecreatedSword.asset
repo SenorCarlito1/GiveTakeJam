@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd029b54a0aa8a449636f3f4d2d1f98, type: 3}
   m_Name: RecreatedSword
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 1533941219883023513, guid: fd811ba05ca763b479e8417e130be19c, type: 3}
   type: 1
-  description: 
+  description: It hurt things fr
   serialNumber: 1
   damage: 2
   durability: 10
