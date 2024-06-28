@@ -423,6 +423,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7309723579163613737, guid: fa636ae5bd35d454eac219740c839809, type: 3}
+      propertyPath: minX
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309723579163613737, guid: fa636ae5bd35d454eac219740c839809, type: 3}
+      propertyPath: minZ
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309723579163613737, guid: fa636ae5bd35d454eac219740c839809, type: 3}
+      propertyPath: spawnRadius
+      value: 42.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309723579163613737, guid: fa636ae5bd35d454eac219740c839809, type: 3}
+      propertyPath: treeSpawnChance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309723579163613737, guid: fa636ae5bd35d454eac219740c839809, type: 3}
+      propertyPath: gruntSpawnChance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7309723579163613737, guid: fa636ae5bd35d454eac219740c839809, type: 3}
+      propertyPath: maxSpawnRateMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
