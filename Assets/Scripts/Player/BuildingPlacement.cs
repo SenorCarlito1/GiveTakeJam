@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -96,6 +97,10 @@ public class BuildingPlacement : MonoBehaviour
             
             SpawnBuilding(hitInfo);
             // Jymeer 
+            for(int i = 0; i < GameManager.instance.hotBarMenu.transform.childCount; i++)
+            {
+                Destroy(GameManager.instance.hotBarMenu.transform.transform.GetChild(i).gameObject);
+            }
             GameManager.instance.hotBarMenu.GetComponentInChildren<DisplayHotBar>().CreateDisplay();
         }
     }

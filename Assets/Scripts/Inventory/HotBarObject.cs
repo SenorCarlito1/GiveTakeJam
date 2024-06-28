@@ -10,6 +10,7 @@ public class HotBarObject : ScriptableObject
 
     public List<HotbarSlot> Container = new List<HotbarSlot>();
     public InventoryObject Inventory;
+
     public void AddItem(ItemObject item, int amount)
     {
         bool hasItem = false;
