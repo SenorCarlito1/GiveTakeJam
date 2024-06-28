@@ -598,7 +598,10 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 63d68c3ba5d7b90418069b96d9c35a4a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 400016, guid: 8b2d11d64877f0b4cad5d45ec7d53473, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1509645198773867691}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100004, guid: 8b2d11d64877f0b4cad5d45ec7d53473, type: 3}
       insertIndex: -1
@@ -660,13 +663,14 @@ MonoBehaviour:
   memoryDuration: 3
   idleDuration: 5
   player: {fileID: 0}
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 8448845716093906234, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
   projectileSpawnPoint: {fileID: 3731285621764276437}
   throwForce: 10
   throwTriggerDistance: 10
   punchDistance: 5
   punchDamageAmount: 5
   punchKnockbackForce: 20
+  rotationSpeed: 20
 --- !u!195 &4343875844841922749
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -680,7 +684,7 @@ NavMeshAgent:
   m_Speed: 5
   m_Acceleration: 0.5
   avoidancePriority: 50
-  m_AngularSpeed: 300
+  m_AngularSpeed: 900
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -739,3 +743,65 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!1001 &4977787407676541067
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3731285621764276437}
+    m_Modifications:
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -18.39054
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.556944
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8448845716093906234, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+      propertyPath: m_Name
+      value: RockMesh
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+--- !u!4 &1509645198773867691 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5901950858860649504, guid: 9c1fb84e9fd13394395d804c729a9625, type: 3}
+  m_PrefabInstance: {fileID: 4977787407676541067}
+  m_PrefabAsset: {fileID: 0}

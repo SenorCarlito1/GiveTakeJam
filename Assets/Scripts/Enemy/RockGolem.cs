@@ -18,16 +18,19 @@ public class EnemyPatrol : MonoBehaviour
     [Header("---Behavior Settings---")]
     [SerializeField] private float memoryDuration = 3f;
     [SerializeField] private float idleDuration = 2f;
-    [SerializeField] private GameObject player; // Changed to GameObject
+    [SerializeField] private GameObject player;
 
     [Header("---Attack Settings---")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Transform projectileSpawnPoint;
     [SerializeField] private float throwForce = 10f;
     [SerializeField] private float throwTriggerDistance = 10f;
-    [SerializeField] private float punchDistance = 2f; // Adjust as needed
-    [SerializeField] private float punchDamageAmount = 20f; // Amount of damage to apply on punch
-    [SerializeField] private float punchKnockbackForce = 20f; // Amount of damage to apply on punch
+    [SerializeField] private float punchDistance = 2f;
+    [SerializeField] private float punchDamageAmount = 20f;
+    [SerializeField] private float punchKnockbackForce = 20f;
+
+    [Header("---Rotation Settings---")]
+    [SerializeField] private float rotationSpeed = 5f; // Adjust as needed
 
     private Vector3 walkPoint;
     private bool walkPointSet;
@@ -44,7 +47,6 @@ public class EnemyPatrol : MonoBehaviour
     private float throwTimer;
     private bool isThrowing;
 
-    // Player position history
     private List<Vector3> playerPositions = new List<Vector3>();
     private List<float> positionTimestamps = new List<float>();
 
@@ -53,7 +55,8 @@ public class EnemyPatrol : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         enemyHealth = GetComponent<EnemyHealth>();
-        player = GameObject.FindGameObjectWithTag("Player"); // Find player GameObject
+        player = GameObject.FindGameObjectWithTag("Player");
+
         if (player == null)
         {
             Debug.LogError("Player GameObject not found. Make sure to tag your player GameObject with 'Player'.");
@@ -67,7 +70,6 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
-        // Update player position history
         UpdatePlayerPositionHistory();
 
         if (player != null && CanSeePlayer())
@@ -116,7 +118,6 @@ public class EnemyPatrol : MonoBehaviour
 
         animator.SetFloat("Speed", navAgent.velocity.magnitude);
 
-        // Check punch distance and trigger punch animation
         if (player != null && Vector3.Distance(transform.position, player.transform.position) <= punchDistance)
         {
             animator.SetTrigger("Punch");
@@ -146,7 +147,7 @@ public class EnemyPatrol : MonoBehaviour
                 {
                     if (hit.transform == player.transform)
                     {
-                        lastKnownPlayerPosition = player.transform.position; // Update last known position
+                        lastKnownPlayerPosition = player.transform.position;
                         return true;
                     }
                 }
@@ -265,43 +266,35 @@ public class EnemyPatrol : MonoBehaviour
 
         Vector3 targetPosition = player.transform.position;
 
-        // Determine if the player is within sight
         if (!CanSeePlayer())
         {
             targetPosition = GetPositionOneSecondAgo();
         }
 
-        // Check if the target position is within the FOV
         if (!IsTargetWithinFOV(targetPosition))
         {
             isThrowing = false;
-            return; // Do not throw the projectile if the target is out of FOV
+            return;
         }
 
-        // Spawn projectile at the projectileSpawnPoint
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
-
-        // Calculate direction to the player
         Vector3 directionToPlayer = (targetPosition - projectileSpawnPoint.position).normalized;
 
-        // Apply force to the projectile
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.AddForce(directionToPlayer * throwForce, ForceMode.Impulse);
         }
 
-        // Set the target of the ProjectileController to the player
         ProjectileController controller = projectile.GetComponent<ProjectileController>();
         if (controller != null)
         {
             controller.target = player.transform;
         }
 
-        // Reset throw flags
         isThrowing = false;
         hasThrownProjectile = true;
-        throwTimer = 1f; // Cooldown timer before the next throw can happen
+        throwTimer = 1f;
     }
 
     private void UpdatePlayerPositionHistory()
@@ -311,7 +304,6 @@ public class EnemyPatrol : MonoBehaviour
             playerPositions.Add(player.transform.position);
             positionTimestamps.Add(Time.time);
 
-            // Remove positions older than 5 seconds to keep the list manageable
             while (positionTimestamps.Count > 0 && Time.time - positionTimestamps[0] > 5f)
             {
                 playerPositions.RemoveAt(0);
@@ -331,21 +323,18 @@ public class EnemyPatrol : MonoBehaviour
                 return playerPositions[i];
             }
         }
-        return lastKnownPlayerPosition; // Fallback if no position is found
+        return lastKnownPlayerPosition;
     }
 
-    // Called by animation event for punch
     public void PerformPunch()
     {
         if (player != null && Vector3.Distance(transform.position, player.transform.position) <= punchDistance)
         {
-            // Apply damage to the player
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(punchDamageAmount);
 
-                // Apply knockback to the player
                 Vector3 knockbackDirection = (player.transform.position - transform.position).normalized;
                 playerHealth.TakeKnockback(knockbackDirection, punchKnockbackForce);
             }
@@ -362,7 +351,6 @@ public class EnemyPatrol : MonoBehaviour
 
     public void TakeDamageAnimation()
     {
-        // Trigger your damage animation using the Animator component
         animator.SetTrigger("TakeDamage");
     }
 
@@ -377,7 +365,7 @@ public class EnemyPatrol : MonoBehaviour
         {
             Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
     }
 }

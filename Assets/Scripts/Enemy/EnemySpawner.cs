@@ -16,12 +16,13 @@ public class MonsterSpawner : MonoBehaviour
     [SerializeField] private float regularSpawnTime = 2f; // Regular spawn time in seconds
     [SerializeField] private float maxSpawnRateMultiplier = 1f; // 1 means normal spawn time, 2 means double the spawn time
 
+    [SerializeField] private float spawnRadius = 10f; // Radius of the spawn circle
+
     private float currentSpawnTime;
     private float timeSinceLastSpawn = 0f;
 
     private void Start()
     {
-
         // Calculate the spawn time based on maxSpawnRateMultiplier
         currentSpawnTime = regularSpawnTime * maxSpawnRateMultiplier;
         Debug.Log($"Initial spawn rate: {currentSpawnTime} seconds");
@@ -84,7 +85,20 @@ public class MonsterSpawner : MonoBehaviour
 
     private Vector3 GetRandomSpawnPosition()
     {
-        // Implement your own logic to get a random spawn position
-        return new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+        // Generate random angle in radians
+        float angle = Random.Range(0f, Mathf.PI * 2f);
+        // Calculate position on circle using polar coordinates
+        float x = Mathf.Cos(angle) * spawnRadius;
+        float z = Mathf.Sin(angle) * spawnRadius;
+        // Offset by spawner's position
+        Vector3 offset = new Vector3(x, 0f, z);
+        return transform.position + offset;
+    }
+
+    private void OnDrawGizmos()
+    {
+        // Draw wireframe circle to visualize spawn area
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
     }
 }
