@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInventory : MonoBehaviour
+public class PlayerHotBar : MonoBehaviour
 {
-    public InventoryObject inventory;
-
+    public HotBarObject hotBar;
 
     private void OnApplicationQuit()
     {
-        inventory.Container.Clear();    
+        hotBar.Container.Clear();
     }
 }

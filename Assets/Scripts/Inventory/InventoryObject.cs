@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
@@ -12,11 +13,14 @@ public class InventoryObject : ScriptableObject
         bool hasItem = false;
         for(int i = 0; i < Container.Count; i++)
         {
-            if (Container[i].item == _item)
+            if (Container[i].item.type != ItemType.Tool)
             {
-                Container[i].AddAmount(_amount);
-                hasItem = true;
-                break;
+                if (Container[i].item == _item)
+                {
+                    Container[i].AddAmount(_amount);
+                    hasItem = true;
+                    break;
+                }
             }
         }
         if(!hasItem)

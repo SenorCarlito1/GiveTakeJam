@@ -5,6 +5,7 @@ using UnityEngine;
 public class ToolPickUp : MonoBehaviour
 {
     [SerializeField] private ToolStats tool;
+    public HotBarObject hotBar;
     private MeshFilter model;
     private MeshRenderer mat;
 
@@ -27,6 +28,7 @@ public class ToolPickUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inRange = true;
+            hotBar = other.GetComponentInChildren<PlayerHotBar>().hotBar;
         }
     }
 
@@ -35,6 +37,7 @@ public class ToolPickUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             inRange = false;
+            hotBar = null;
         }
     }
 
@@ -45,6 +48,8 @@ public class ToolPickUp : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 GameManager.instance.attackScript.AddTool(tool);
+                hotBar.AddItem(tool, 1);
+                GameManager.instance.hotBarMenu.GetComponentInChildren<DisplayHotBar>().CreateDisplay();
                 inRange = false;
                 Destroy(gameObject);
             }

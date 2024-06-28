@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject loseMenu;
     public GameObject inventoryMenu;
+    public GameObject hotBarMenu;
     public GameObject settingsMenu;
     public GameObject playerUI;
     public Button resumeButton;

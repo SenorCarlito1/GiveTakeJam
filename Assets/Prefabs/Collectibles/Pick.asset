@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af61bc65ffd73f64fa495e0c46f05f27, type: 3}
   m_Name: Pick
   m_EditorClassIdentifier: 
+  prefab: {fileID: 1533941219883023513, guid: fd811ba05ca763b479e8417e130be19c, type: 3}
+  type: 1
+  description: 
   serialNumber: 2
   damage: 5
   durability: 10

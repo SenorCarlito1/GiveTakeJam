@@ -5,7 +5,7 @@ using UnityEngine;
 public enum ItemType
 {
     Food,
-    Equipment,
+    Tool,
     Resource,
     Default
 }
