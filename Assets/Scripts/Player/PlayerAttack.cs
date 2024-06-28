@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,9 +9,11 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("----Attack Parameters----")]
     public List<ToolStats> toolList = new List<ToolStats>();
+    private int selectedTool;
     [SerializeField] private float damage;
     [SerializeField] private float durability;
     [SerializeField] private float attackInterval;
+    private float cooldownTimer = Mathf.Infinity;
     [SerializeField] private MeshFilter toolModel;
     [SerializeField] private MeshRenderer toolMat;
     [SerializeField] public MeshCollider toolCollider;
@@ -36,15 +39,27 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        //weaponLocation = GameObject.Find("Wrist_R").transform;
+        if (Input.GetButtonDown("Fire1") && cooldownTimer > attackInterval && toolList.Count > 0)
+        {
+            Attack();
+        }
 
-        gameObject.transform.rotation = gameObject.transform.parent.rotation;
+        ChangeTool();
 
-        if (Input.GetButtonDown("Fire1"))
+        cooldownTimer += Time.deltaTime;
+    }
+
+    private void Attack()
+    {
+        if (durability > 0)
         {
             anim.SetTrigger("Attack");
-            //gameObject.GetComponent<MeshCollider>().enabled = true;
-            //toolCollider.enabled = true;
+            durability--;
+            cooldownTimer = 0;
+        }
+        else
+        {
+            return;
         }
     }
 
@@ -61,18 +76,10 @@ public class PlayerAttack : MonoBehaviour
         }
 
         IDamage dam = other.GetComponent<IDamage>();
-        //PlayerHealth pd = other.GetComponent<PlayerHealth>();
-        //EnemyHealth ed = other.GetComponent<EnemyHealth>();
-
-        //dam.TakeDamage(damage);
-        //pd.TakeDamage(damage);
-        //ed.TakeDamage(damage);
 
         if (dam != null)
         {
             dam.TakeDamage(damage);
-            //pd.TakeDamage(damage);
-            //ed.TakeDamage(damage);
         }
     }
 
@@ -87,23 +94,73 @@ public class PlayerAttack : MonoBehaviour
         durability = toolStat.durability;
 
         toolModel.mesh = toolStat.model.GetComponent<MeshFilter>().sharedMesh;
-        toolMat.material = toolStat.model.GetComponent<MeshRenderer>().sharedMaterial;
-
-        //switch (toolStat.serialNumber)
-        //{
-        //    case 1:
-        //        toolCollider = SwordCollider;
-        //        break;
-        //    case 2:
-        //        toolCollider = PickCollider;
-        //        break;
-        //    case 3:
-        //        toolCollider = AxeCollider;
-        //        break;
-        //}
+        toolMat.materials = toolStat.model.GetComponent<MeshRenderer>().sharedMaterials;
 
         toolCollider.sharedMesh = toolModel.mesh;
         gameObject.GetComponent<MeshCollider>().enabled = false;
+
+        switch (toolStat.serialNumber)
+        {
+            case 1:
+                gameObject.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                gameObject.transform.localPosition = new Vector3(0.03f, 0.217f, 0.005f);
+                gameObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                break;
+            case 2:
+                gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+                gameObject.transform.localPosition = new Vector3(0.052f, 0.365f, 0.011f);
+                gameObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                break;
+            case 3:
+                gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+                gameObject.transform.localPosition = new Vector3(0.012f, -0.0199f, -0.0031f);
+                gameObject.transform.localRotation = new Quaternion(0, 180, 0, 0);
+                break;
+        }
+
+        selectedTool = toolList.Count - 1;
         //toolCollider.enabled = false;
+    }
+
+    private void ChangeTool()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedTool < toolList.Count - 1)
+        {
+            selectedTool++;
+            ChangeToolStats();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedTool > 0)
+        {
+            selectedTool--;
+            ChangeToolStats();
+        }
+    }
+
+    private void ChangeToolStats()
+    {
+        damage = toolList[selectedTool].damage;
+        durability = toolList[selectedTool].durability;
+        attackInterval = toolList[selectedTool].attackInterval;
+        toolModel.mesh = toolList[selectedTool].model.GetComponent<MeshFilter>().sharedMesh;
+        toolMat.materials = toolList[selectedTool].model.GetComponent<MeshRenderer>().sharedMaterials;
+
+        switch (toolList[selectedTool].serialNumber)
+        {
+            case 1:
+                gameObject.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                gameObject.transform.localPosition = new Vector3(0.03f, 0.217f, 0.005f);
+                gameObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                break;
+            case 2:
+                gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+                gameObject.transform.localPosition = new Vector3(0.052f, 0.365f, 0.011f);
+                gameObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                break;
+            case 3:
+                gameObject.transform.localScale = new Vector3(1f, 1f, 1f);
+                gameObject.transform.localPosition = new Vector3(0.012f, -0.0199f, -0.0031f);
+                gameObject.transform.localRotation = new Quaternion(0, 180, 0, 0);
+                break;
+        }
     }
 }

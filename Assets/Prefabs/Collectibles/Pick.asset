@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serialNumber: 2
   damage: 5
-  durability: 9
+  durability: 10
   attackInterval: 1
-  model: {fileID: 854796221779763337, guid: 8377906b04baf044aabc549d34d2d209, type: 3}
+  model: {fileID: 8060984565612659158, guid: 8b546774c1bc6d74caf217165051bed1, type: 3}
   swingSound: {fileID: 0}
   swingSoundVol: 0
   hitSound: {fileID: 0}
