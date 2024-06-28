@@ -27,6 +27,7 @@ public class BuildingPlacement : MonoBehaviour
     private MeshCollider[] meshColliders;
     private MeshRenderer[] meshRenders;
 
+
     void Start()
     {
         _camera = GameManager.instance.currCamera;
@@ -46,7 +47,9 @@ public class BuildingPlacement : MonoBehaviour
         }
 
         // Enables build mode
-        if (Input.GetKeyDown(KeyCode.F6)) inBuildMode = true;
+        if (Input.GetKeyDown(KeyCode.F6) && GameManager.instance.woodCount >= 8) 
+            inBuildMode = true;
+
 
         SwitchBuilding();
 
@@ -74,9 +77,26 @@ public class BuildingPlacement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            // If(Resource ==  4)
-            // PLace vuilding
+            
+            for (int i = 0; i < GameManager.instance.hotBarObject.Container.Count; i++) 
+            {
+                if (GameManager.instance.hotBarObject.Container[i].item.type == ItemType.Resource)
+                {
+                    GameManager.instance.woodCount -= 8;
+                    GameManager.instance.hotBarObject.Container[i].amount -= 8;
+
+                    if (GameManager.instance.hotBarObject.Container[i].amount == 0)
+                    {
+                        GameManager.instance.hotBarObject.Container.Remove(GameManager.instance.hotBarObject.Container[i]);
+                        
+                    }
+                   
+                }
+            }
+            
             SpawnBuilding(hitInfo);
+            // Jymeer 
+            GameManager.instance.hotBarMenu.GetComponentInChildren<DisplayHotBar>().CreateDisplay();
         }
     }
 
@@ -137,7 +157,8 @@ public class BuildingPlacement : MonoBehaviour
             meshColliders[i].enabled = true;
         }
 
-
+        
+        
         inBuildMode = false;
     }
     private void FixedUpdate()

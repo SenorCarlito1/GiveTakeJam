@@ -16,6 +16,7 @@ public class DisplayHotBar : MonoBehaviour
 
     public void CreateDisplay()
     {
+
         for(int i = 0; i < HotBar.Container.Count; i++)
         {
             var obj = Instantiate(HotBar.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
