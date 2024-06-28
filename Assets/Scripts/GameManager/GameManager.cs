@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     public GameObject hotBarMenu;
     public GameObject settingsMenu;
     public GameObject playerUI;
+    public InventoryObject inventoryObject;
+    public HotBarObject hotBarObject;
     public Button resumeButton;
     public TextMeshProUGUI resumeText;
     public Image playerHPBar;
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     public bool isPaused;
     float timeScaleOrig;
+    public int woodCount;
 
     // Start is called before the first frame update
     void Awake()

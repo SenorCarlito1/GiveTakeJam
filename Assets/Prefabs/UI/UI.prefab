@@ -1352,11 +1352,14 @@ MonoBehaviour:
   hotBarMenu: {fileID: 581686276660248627}
   settingsMenu: {fileID: 7126759111831116195}
   playerUI: {fileID: 5853275860316760319}
+  inventoryObject: {fileID: 11400000, guid: 0b575b5169ace6d4b895ad35598fd019, type: 2}
+  hotBarObject: {fileID: 11400000, guid: dd8315976e945614e908c73aacd3fa6a, type: 2}
   resumeButton: {fileID: 0}
   resumeText: {fileID: 0}
   playerHPBar: {fileID: 5090462102897589119}
   lerpHPBar: {fileID: 3160010295887438949}
   isPaused: 0
+  woodCount: 0
 --- !u!114 &2422782794569933704
 MonoBehaviour:
   m_ObjectHideFlags: 0
