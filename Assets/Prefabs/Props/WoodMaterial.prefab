@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9138386894055117143}
   - component: {fileID: 7784006920023691344}
   - component: {fileID: -5340958593231524677}
+  - component: {fileID: 4732168605767573674}
   m_Layer: 0
   m_Name: WoodMaterial
   m_TagString: Untagged
@@ -155,3 +156,17 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0.028959475, y: 0.10299567, z: -0.0023028408}
+--- !u!114 &4732168605767573674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190917856291312703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d379fde3e2b007469b6039b0cfc7e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resource: {fileID: 11400000, guid: f9e8ad58d27ff0649a2c3c5aeb33e5a2, type: 2}
+  hotBar: {fileID: 11400000, guid: dd8315976e945614e908c73aacd3fa6a, type: 2}

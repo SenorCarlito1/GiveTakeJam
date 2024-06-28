@@ -74,6 +74,8 @@ public class BuildingPlacement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
+            // If(Resource ==  4)
+            // PLace vuilding
             SpawnBuilding(hitInfo);
         }
     }
