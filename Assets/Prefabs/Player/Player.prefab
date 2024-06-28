@@ -364,6 +364,8 @@ GameObject:
   - component: {fileID: 2061183093705987369}
   - component: {fileID: 300411584376208777}
   - component: {fileID: 3668555935411575267}
+  - component: {fileID: 5046945027064994318}
+  - component: {fileID: 2581464138859777156}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -617,6 +619,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5046945027064994318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7130561338779871068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa90b6e72643438478b04063e9e1a6a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 0b575b5169ace6d4b895ad35598fd019, type: 2}
+--- !u!114 &2581464138859777156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7130561338779871068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 652fbfcba8568f947be850467ec4dcfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hotBar: {fileID: 11400000, guid: dd8315976e945614e908c73aacd3fa6a, type: 2}
 --- !u!1001 &1519917626053785559
 PrefabInstance:
   m_ObjectHideFlags: 0

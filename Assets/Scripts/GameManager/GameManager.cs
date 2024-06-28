@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject loseMenu;
     public GameObject inventoryMenu;
+    public GameObject hotBarMenu;
     public GameObject settingsMenu;
     public GameObject playerUI;
     public Button resumeButton;
@@ -106,12 +107,16 @@ public class GameManager : MonoBehaviour
             {
                 activeMenu.SetActive(false);
                 activeMenu = null;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
             }
             else if(activeMenu == null)
             {
                 activeMenu = inventoryMenu;
                 inventoryMenu.GetComponentInChildren<DisplayInventory>().CreateDisplay();
                 activeMenu.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
             }
         }
         
