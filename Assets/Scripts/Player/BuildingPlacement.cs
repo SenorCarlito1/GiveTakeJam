@@ -27,9 +27,6 @@ public class BuildingPlacement : MonoBehaviour
     private MeshCollider[] meshColliders;
     private MeshRenderer[] meshRenders;
 
-
-
-
     void Start()
     {
         _camera = GameManager.instance.currCamera;
@@ -95,14 +92,14 @@ public class BuildingPlacement : MonoBehaviour
 
     private void SwitchBuilding()
     {
-        if (Input.mouseScrollDelta.y > 0 && selectedBuilding < buildingList.Length - 1)
+        if (Input.mouseScrollDelta.y > 0 && selectedBuilding < buildingList.Length - 1 && !inBuildMode)
         {
             selectedBuilding++;
             ChangeBuilding();
             Debug.Log("UP current Index is " + selectedBuilding);
 
         }
-        else if (Input.mouseScrollDelta.y < 0 && selectedBuilding > 0)
+        else if (Input.mouseScrollDelta.y < 0 && selectedBuilding > 0 && !inBuildMode)
         {
             selectedBuilding--;
             ChangeBuilding();
