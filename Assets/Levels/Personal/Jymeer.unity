@@ -1071,11 +1071,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b37a591914892534a992478a9ae83f10, type: 3}
---- !u!1 &737651301 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 581686276660248627, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-  m_PrefabInstance: {fileID: 9120572414323489326}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &788695231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1991,34 +1986,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 755258945892657167, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-      propertyPath: hotBarMenu
-      value: 
-      objectReference: {fileID: 737651301}
-    - target: {fileID: 2683221199958093016, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2701444391722703985, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1050
-      objectReference: {fileID: 0}
-    - target: {fileID: 3103724984188290205, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-      propertyPath: X_START
-      value: -473
-      objectReference: {fileID: 0}
-    - target: {fileID: 3103724984188290205, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-      propertyPath: X_SPACE_BETWEEN_ITEMS
-      value: 105
-      objectReference: {fileID: 0}
-    - target: {fileID: 3103724984188290205, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-      propertyPath: Y_SPACE_BETWEEN_ITEMS
-      value: 105
-      objectReference: {fileID: 0}
-    - target: {fileID: 3885554784337260375, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -220
-      objectReference: {fileID: 0}
     - target: {fileID: 4032202334254298482, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2099,36 +2066,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4430402201996343618, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1050
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 581686276660248627, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9120572414323489330}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cf9f5dea81a45a41ab86f5866eba925, type: 3}
---- !u!114 &9120572414323489330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 737651301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf661c8101617d74894c62e2099b18f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HotBar: {fileID: 11400000, guid: dd8315976e945614e908c73aacd3fa6a, type: 2}
-  X_START: -473
-  Y_START: 0
-  X_SPACE_BETWEEN_ITEMS: 105
-  NUMBER_OF_COLUMN: 10
-  Y_SPACE_BETWEEN_ITEMS: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
