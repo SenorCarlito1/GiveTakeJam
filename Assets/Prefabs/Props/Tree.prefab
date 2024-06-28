@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  wood: {fileID: 0}
+  wood: {fileID: 1190917856291312703, guid: 5db3739a856e3c140a89bfb98ae6198d, type: 3}
   currHealth: 0
 --- !u!54 &7494674566070247998
 Rigidbody:
