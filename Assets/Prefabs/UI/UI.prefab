@@ -574,6 +574,7 @@ GameObject:
   - component: {fileID: 2701444391722703985}
   - component: {fileID: 1806218759124397357}
   - component: {fileID: 745600193096244098}
+  - component: {fileID: 8672829953803396039}
   m_Layer: 5
   m_Name: Hotbar
   m_TagString: Untagged
@@ -598,7 +599,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -356}
-  m_SizeDelta: {x: 1000, y: 100}
+  m_SizeDelta: {x: 1050, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1806218759124397357
 CanvasRenderer:
@@ -638,6 +639,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8672829953803396039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581686276660248627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf661c8101617d74894c62e2099b18f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HotBar: {fileID: 11400000, guid: dd8315976e945614e908c73aacd3fa6a, type: 2}
+  X_START: -473
+  Y_START: 0
+  X_SPACE_BETWEEN_ITEMS: 105
+  NUMBER_OF_COLUMN: 10
+  Y_SPACE_BETWEEN_ITEMS: 0
 --- !u!1 &794712122238267183
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,6 +1349,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 5593762212531459654}
   loseMenu: {fileID: 6165362023600323302}
   inventoryMenu: {fileID: 2683221199958093016}
+  hotBarMenu: {fileID: 581686276660248627}
   settingsMenu: {fileID: 7126759111831116195}
   playerUI: {fileID: 5853275860316760319}
   resumeButton: {fileID: 0}
@@ -1874,7 +1894,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 64}
-  m_SizeDelta: {x: 1000, y: 700}
+  m_SizeDelta: {x: 1050, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1647820456421261206
 CanvasRenderer:
@@ -1927,11 +1947,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 0b575b5169ace6d4b895ad35598fd019, type: 2}
-  X_START: -430
+  X_START: -473
   Y_START: 280
-  X_SPACE_BETWEEN_ITEMS: 125
+  X_SPACE_BETWEEN_ITEMS: 105
   NUMBER_OF_COLUMN: 10
-  Y_SPACE_BETWEEN_ITEMS: 125
+  Y_SPACE_BETWEEN_ITEMS: 105
 --- !u!1 &2727449541003185863
 GameObject:
   m_ObjectHideFlags: 0
@@ -7403,7 +7423,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197, y: -251}
+  m_AnchoredPosition: {x: -220, y: -251}
   m_SizeDelta: {x: 600, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5063254993558815055
