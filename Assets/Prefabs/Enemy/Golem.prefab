@@ -166,7 +166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 8b2d11d64877f0b4cad5d45ec7d53473, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.201462
+      value: -23.07
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 8b2d11d64877f0b4cad5d45ec7d53473, type: 3}
       propertyPath: m_LocalPosition.y
@@ -653,7 +653,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkPointRange: 10
-  sightRange: 200
+  sightRange: 25
   fieldOfView: 110
   chaseStoppingDistance: 2.5
   minDistanceToPlayer: 3.5
@@ -708,8 +708,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.87
-  m_Height: 2
+  m_Radius: 2
+  m_Height: 5
   m_Direction: 1
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!54 &1067162248527292916

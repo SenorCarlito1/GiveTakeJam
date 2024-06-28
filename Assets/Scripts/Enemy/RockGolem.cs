@@ -18,7 +18,7 @@ public class EnemyPatrol : MonoBehaviour
     [Header("---Behavior Settings---")]
     [SerializeField] private float memoryDuration = 3f;
     [SerializeField] private float idleDuration = 2f;
-    [SerializeField] private Transform player;
+    [SerializeField] private GameObject player; // Changed to GameObject
 
     [Header("---Attack Settings---")]
     [SerializeField] private GameObject projectilePrefab;
@@ -53,7 +53,11 @@ public class EnemyPatrol : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         enemyHealth = GetComponent<EnemyHealth>();
-        SetNewWalkPoint();
+        player = GameObject.FindGameObjectWithTag("Player"); // Find player GameObject
+        if (player == null)
+        {
+            Debug.LogError("Player GameObject not found. Make sure to tag your player GameObject with 'Player'.");
+        }
     }
 
     void Update()
@@ -66,12 +70,12 @@ public class EnemyPatrol : MonoBehaviour
         // Update player position history
         UpdatePlayerPositionHistory();
 
-        if (CanSeePlayer())
+        if (player != null && CanSeePlayer())
         {
-            lastKnownPlayerPosition = player.position;
+            lastKnownPlayerPosition = player.transform.position;
             memoryTimer = memoryDuration;
 
-            if (isChasing && Vector3.Distance(transform.position, player.position) > throwTriggerDistance)
+            if (isChasing && Vector3.Distance(transform.position, player.transform.position) > throwTriggerDistance)
             {
                 if (!isThrowing && !hasThrownProjectile && IsPlayerInThrowArc())
                 {
@@ -113,7 +117,7 @@ public class EnemyPatrol : MonoBehaviour
         animator.SetFloat("Speed", navAgent.velocity.magnitude);
 
         // Check punch distance and trigger punch animation
-        if (Vector3.Distance(transform.position, player.position) <= punchDistance)
+        if (player != null && Vector3.Distance(transform.position, player.transform.position) <= punchDistance)
         {
             animator.SetTrigger("Punch");
         }
@@ -130,9 +134,9 @@ public class EnemyPatrol : MonoBehaviour
 
     private bool CanSeePlayer()
     {
-        if (Vector3.Distance(transform.position, player.position) < sightRange)
+        if (player != null && Vector3.Distance(transform.position, player.transform.position) < sightRange)
         {
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
             float angleBetweenEnemyAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
             if (angleBetweenEnemyAndPlayer < fieldOfView / 2)
@@ -140,9 +144,9 @@ public class EnemyPatrol : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, directionToPlayer, out hit, sightRange))
                 {
-                    if (hit.transform == player)
+                    if (hit.transform == player.transform)
                     {
-                        lastKnownPlayerPosition = player.position; // Update last known position
+                        lastKnownPlayerPosition = player.transform.position; // Update last known position
                         return true;
                     }
                 }
@@ -154,9 +158,13 @@ public class EnemyPatrol : MonoBehaviour
 
     private bool IsPlayerInThrowArc()
     {
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        float angleBetweenEnemyAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-        return angleBetweenEnemyAndPlayer <= 45f; // 90 degrees arc
+        if (player != null)
+        {
+            Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+            float angleBetweenEnemyAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+            return angleBetweenEnemyAndPlayer <= 45f; // 90 degrees arc
+        }
+        return false;
     }
 
     private bool IsTargetWithinFOV(Vector3 targetPosition)
@@ -168,15 +176,18 @@ public class EnemyPatrol : MonoBehaviour
 
     private void ChasePlayer()
     {
-        isChasing = true;
-        isIdle = false;
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        Vector3 targetPosition = player.position - directionToPlayer * minDistanceToPlayer;
-        navAgent.SetDestination(targetPosition);
-
-        if (Vector3.Distance(transform.position, player.position) <= chaseStoppingDistance)
+        if (player != null)
         {
-            Debug.Log("Player too close! Implement attack or game over logic.");
+            isChasing = true;
+            isIdle = false;
+            Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+            Vector3 targetPosition = player.transform.position - directionToPlayer * minDistanceToPlayer;
+            navAgent.SetDestination(targetPosition);
+
+            if (Vector3.Distance(transform.position, player.transform.position) <= chaseStoppingDistance)
+            {
+                Debug.Log("Player too close! Implement attack or game over logic.");
+            }
         }
     }
 
@@ -247,8 +258,12 @@ public class EnemyPatrol : MonoBehaviour
 
     public void SpawnAndThrowProjectile()
     {
-        Transform targetTransform = player;
-        Vector3 targetPosition = player.position;
+        if (player == null)
+        {
+            return;
+        }
+
+        Vector3 targetPosition = player.transform.position;
 
         // Determine if the player is within sight
         if (!CanSeePlayer())
@@ -263,34 +278,24 @@ public class EnemyPatrol : MonoBehaviour
             return; // Do not throw the projectile if the target is out of FOV
         }
 
-        // Create an empty GameObject at the target position if player is not visible
-        if (targetTransform == null)
-        {
-            GameObject lastKnownPositionMarker = new GameObject("LastKnownPositionMarker");
-            lastKnownPositionMarker.transform.position = targetPosition;
-            targetTransform = lastKnownPositionMarker.transform;
-
-            // Optionally, you can destroy this GameObject after a short duration to clean up
-            Destroy(lastKnownPositionMarker, 5f); // Adjust the duration as needed
-        }
-
-        Vector3 directionToTarget = (targetTransform.position - projectileSpawnPoint.position).normalized;
-
         // Spawn projectile at the projectileSpawnPoint
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
+
+        // Calculate direction to the player
+        Vector3 directionToPlayer = (targetPosition - projectileSpawnPoint.position).normalized;
 
         // Apply force to the projectile
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.AddForce(directionToTarget * throwForce, ForceMode.Impulse);
+            rb.AddForce(directionToPlayer * throwForce, ForceMode.Impulse);
         }
 
-        // Set the target of the ProjectileController to the determined transform
+        // Set the target of the ProjectileController to the player
         ProjectileController controller = projectile.GetComponent<ProjectileController>();
         if (controller != null)
         {
-            controller.target = targetTransform;
+            controller.target = player.transform;
         }
 
         // Reset throw flags
@@ -301,14 +306,17 @@ public class EnemyPatrol : MonoBehaviour
 
     private void UpdatePlayerPositionHistory()
     {
-        playerPositions.Add(player.position);
-        positionTimestamps.Add(Time.time);
-
-        // Remove positions older than 5 seconds to keep the list manageable
-        while (positionTimestamps.Count > 0 && Time.time - positionTimestamps[0] > 5f)
+        if (player != null)
         {
-            playerPositions.RemoveAt(0);
-            positionTimestamps.RemoveAt(0);
+            playerPositions.Add(player.transform.position);
+            positionTimestamps.Add(Time.time);
+
+            // Remove positions older than 5 seconds to keep the list manageable
+            while (positionTimestamps.Count > 0 && Time.time - positionTimestamps[0] > 5f)
+            {
+                playerPositions.RemoveAt(0);
+                positionTimestamps.RemoveAt(0);
+            }
         }
     }
 
@@ -323,21 +331,24 @@ public class EnemyPatrol : MonoBehaviour
                 return playerPositions[i];
             }
         }
-
         return lastKnownPlayerPosition; // Fallback if no position is found
     }
 
     // Called by animation event for punch
     public void PerformPunch()
     {
-        if (Vector3.Distance(transform.position, player.position) <= punchDistance)
+        if (player != null && Vector3.Distance(transform.position, player.transform.position) <= punchDistance)
         {
             // Apply damage to the player
-            player.GetComponent<PlayerHealth>().TakeDamage(punchDamageAmount);
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(punchDamageAmount);
 
-            // Apply knockback to the player
-            Vector3 knockbackDirection = (player.position - transform.position).normalized;
-            player.GetComponent<PlayerHealth>().TakeKnockback(knockbackDirection, punchKnockbackForce);
+                // Apply knockback to the player
+                Vector3 knockbackDirection = (player.transform.position - transform.position).normalized;
+                playerHealth.TakeKnockback(knockbackDirection, punchKnockbackForce);
+            }
         }
     }
 
@@ -348,15 +359,25 @@ public class EnemyPatrol : MonoBehaviour
             RotateTowardsPlayer();
         }
     }
+
     public void TakeDamageAnimation()
     {
         // Trigger your damage animation using the Animator component
         animator.SetTrigger("TakeDamage");
     }
+
+    public void DeathAnimation()
+    {
+        animator.SetTrigger("Die");
+    }
+
     private void RotateTowardsPlayer()
     {
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        if (player != null)
+        {
+            Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        }
     }
 }

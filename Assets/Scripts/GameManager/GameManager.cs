@@ -72,11 +72,13 @@ public class GameManager : MonoBehaviour
         torsoModel = GameObject.FindGameObjectWithTag("mTorso").GetComponent<SkinnedMeshRenderer>();
         starterClothes = GameObject.FindGameObjectsWithTag("mStarter");
         plateClothes = GameObject.FindGameObjectsWithTag("mPlate");
+
+        currCamera = thirdPersonCamera;
     }
 
     private void Start()
     {
-        currCamera = thirdPersonCamera;
+        
         firstPersonCamera.gameObject.SetActive(false);
     }
 

@@ -26,7 +26,7 @@ public class TreeStump : MonoBehaviour
     private float memoryTimer;
     private Animator animator;
     private EnemyHealth enemyHealth;
-    private Transform player;
+    private GameObject player; // Changed to GameObject
 
     private bool isAttacking; // Flag to indicate if currently attacking
 
@@ -35,7 +35,7 @@ public class TreeStump : MonoBehaviour
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         enemyHealth = GetComponent<EnemyHealth>();
-        player = GameObject.FindWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
 
         if (player == null)
         {
@@ -56,7 +56,7 @@ public class TreeStump : MonoBehaviour
 
         if (CanSeePlayer())
         {
-            lastKnownPlayerPosition = player.position;
+            lastKnownPlayerPosition = player.transform.position;
             memoryTimer = sightRange;
 
             // Only chase if not currently attacking
@@ -105,7 +105,7 @@ public class TreeStump : MonoBehaviour
             isAttacking = false;
 
             // Regular behavior when not in spin attack
-            if (Vector3.Distance(transform.position, player.position) <= spinAttackDistance)
+            if (Vector3.Distance(transform.position, player.transform.position) <= spinAttackDistance)
             {
                 animator.SetTrigger("SpinAttack");
             }
@@ -114,9 +114,9 @@ public class TreeStump : MonoBehaviour
 
     private bool CanSeePlayer()
     {
-        if (Vector3.Distance(transform.position, player.position) < sightRange)
+        if (Vector3.Distance(transform.position, player.transform.position) < sightRange)
         {
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
             float angleBetweenEnemyAndPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
             if (angleBetweenEnemyAndPlayer < fieldOfView / 2)
@@ -124,7 +124,7 @@ public class TreeStump : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, directionToPlayer, out hit, sightRange))
                 {
-                    if (hit.transform == player)
+                    if (hit.transform == player.transform)
                     {
                         return true;
                     }
@@ -138,11 +138,11 @@ public class TreeStump : MonoBehaviour
     private void ChasePlayer()
     {
         isChasing = true;
-        Vector3 directionToPlayer = (player.position - transform.position).normalized;
-        Vector3 targetPosition = player.position - directionToPlayer * minDistanceToPlayer;
+        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+        Vector3 targetPosition = player.transform.position - directionToPlayer * minDistanceToPlayer;
         navAgent.SetDestination(targetPosition);
 
-        if (Vector3.Distance(transform.position, player.position) <= chaseStoppingDistance)
+        if (Vector3.Distance(transform.position, player.transform.position) <= chaseStoppingDistance)
         {
             Debug.Log("Player too close! Implement attack or game over logic.");
         }
@@ -205,7 +205,7 @@ public class TreeStump : MonoBehaviour
     // Called by animation event for spin attack
     public void PerformSpinAttack()
     {
-        if (Vector3.Distance(transform.position, player.position) <= spinAttackDistance)
+        if (Vector3.Distance(transform.position, player.transform.position) <= spinAttackDistance)
         {
             // Apply damage to the player
             player.GetComponent<PlayerHealth>().TakeDamage(spinAttackDamage);

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af61bc65ffd73f64fa495e0c46f05f27, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  serialNumber: 3
+  damage: 7
+  durability: 10
+  attackInterval: 0.9
+  model: {fileID: 2674031607261032064, guid: b37a591914892534a992478a9ae83f10, type: 3}
+  swingSound: {fileID: 0}
+  swingSoundVol: 0
+  hitSound: {fileID: 0}
+  hitSoundVol: 0
