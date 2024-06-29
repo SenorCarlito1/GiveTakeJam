@@ -134,11 +134,25 @@ public class PlayerMovement : MonoBehaviour
 
     public void ColliderOn()
     {
-        attackScript.toolCollider.enabled = true;
+        if (attackScript.toolList[attackScript.selectedTool].serialNumber == 0)
+        {
+            attackScript.fistCollider.enabled = true;
+        }
+        else
+        {
+            attackScript.toolCollider.enabled = true;
+        }
     }
 
     public void ColliderOff()
     {
-        attackScript.toolCollider.enabled = false;
+        if (attackScript.toolList[attackScript.selectedTool].serialNumber == 0)
+        {
+            attackScript.fistCollider.enabled = false;
+        }
+        else
+        {
+            attackScript.toolCollider.enabled = false;
+        }
     }
 }

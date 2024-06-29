@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("----Attack Parameters----")]
     public List<ToolStats> toolList = new List<ToolStats>();
-    private int selectedTool;
+    public int selectedTool;
     [SerializeField] private float damage;
     [SerializeField] private float durability;
     [SerializeField] private float attackInterval;
@@ -17,6 +17,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private MeshFilter toolModel;
     [SerializeField] private MeshRenderer toolMat;
     [SerializeField] public MeshCollider toolCollider;
+    [SerializeField] public BoxCollider fistCollider;
     //[SerializeField] public BoxCollider SwordCollider;
     //[SerializeField] public BoxCollider PickCollider;
     //[SerializeField] public BoxCollider AxeCollider;
