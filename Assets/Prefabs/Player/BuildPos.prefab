@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2892485530541286703}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.222, y: -0.819, z: 1.746}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -45,11 +45,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rayDistance: 50
+  defaultLayerInt: 8
   buildModLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  defaultLayerInt: 8
   rayOrigin: {fileID: 4637889274971550774}
-  buildingMatPositive: {fileID: 0}
+  buildingMatPositive: {fileID: 2100000, guid: 676f6fffa37d38341b9080705c6e6ebd, type: 2}
+  buildingMatOriginal: {fileID: 2100000, guid: cd18a0c9373f87242beb64d23a88e5ee, type: 2}
   buildingMatNegative: {fileID: 0}
+  buildingList:
+  - {fileID: 0}
+  - {fileID: 0}
   gameObjectToPosition: {fileID: 0}

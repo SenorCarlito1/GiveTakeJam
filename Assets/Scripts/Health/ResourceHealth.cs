@@ -20,6 +20,7 @@ public class ResourceHealth : MonoBehaviour, IDamage
 
     public void TakeDamage(float dmg)
     {
+        GameManager.instance.hotBarMenu.GetComponentInChildren<DisplayHotBar>().CreateDisplay();
         switch (resourceName)
         {
             case "Stone":
@@ -49,6 +50,8 @@ public class ResourceHealth : MonoBehaviour, IDamage
                 {
                     GameManager.instance.woodCount += 0;
                 }
+               
+               
                 break;
         }
 
@@ -61,11 +64,18 @@ public class ResourceHealth : MonoBehaviour, IDamage
         //var instance = Instantiate(rescource, gameObject.transform.position + new Vector3(ranX, 2, ranZ), Quaternion.identity);
         //// Adds force to the instantiated Objected
         //instance.GetComponent<Rigidbody>().AddForce(new Vector3(forceRanX, 2, forceRanZ));
+        
+       
         if (currHealth <= 0)
         {
             Debug.Log("Broke Tree!");
             BreakTree();
         }
+        for (int i = 0; i < GameManager.instance.hotBarMenu.transform.childCount; i++)
+        {
+            Destroy(GameManager.instance.hotBarMenu.transform.transform.GetChild(i).gameObject);
+        }
+        GameManager.instance.hotBarMenu.GetComponentInChildren<DisplayHotBar>().CreateDisplay();
     }
 
     private void BreakTree()
