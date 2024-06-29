@@ -4,33 +4,53 @@ using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject rockGolemPrefab; // Monster prefab for Rock Golem
-    [SerializeField] private float rockGolemSpawnChance = 0.1f; // Spawn chance for Rock Golem (10%)
+    [SerializeField] private GameObject rockGolemPrefab;
+    [SerializeField] private float rockGolemSpawnChance = 0.0f;
 
-    [SerializeField] private GameObject treePrefab; // Monster prefab for Tree
-    [SerializeField] private float treeSpawnChance = 0.2f; // Spawn chance for Tree (20%)
+    [SerializeField] private GameObject treePrefab;
+    [SerializeField] private float treeSpawnChance = 0.0f;
 
-    [SerializeField] private GameObject gruntPrefab; // Monster prefab for Grunt
-    [SerializeField] private float gruntSpawnChance = 0.7f; // Spawn chance for Grunt (70%)
+    [SerializeField] private GameObject gruntPrefab;
+    [SerializeField] private float gruntSpawnChance = 1.0f;
 
-    [SerializeField] private float regularSpawnTime = 2f; // Regular spawn time in seconds
-    [SerializeField] private float maxSpawnRateMultiplier = 1f; // 1 means normal spawn time, 2 means double the spawn time
+    [SerializeField] private float regularSpawnTime = 2f;
+    [SerializeField] private float maxSpawnRateMultiplier = 1f;
 
-    [SerializeField] private float spawnRadius = 10f; // Radius of the spawn circle
+    [SerializeField] private float spawnRadius = 10f;
 
     private float currentSpawnTime;
     private float timeSinceLastSpawn = 0f;
 
+    private int previousWoodCount; // Store the previous wood count to detect changes
+    private int previousStoneCount;
+
     private void Start()
     {
-        // Calculate the spawn time based on maxSpawnRateMultiplier
-        currentSpawnTime = regularSpawnTime * maxSpawnRateMultiplier;
+        // Calculate the initial spawn time based on maxSpawnRateMultiplier
+        UpdateCurrentSpawnTime();
         Debug.Log($"Initial spawn rate: {currentSpawnTime} seconds");
+
+        // Initialize previousWoodCount to current woodCount
+        previousWoodCount = GameManager.instance.woodCount;
+        previousStoneCount = GameManager.instance.stoneCount;
     }
 
     private void Update()
     {
         AdjustSpawnChances();
+
+        // Check for changes in woodCount
+        if (GameManager.instance.woodCount != previousWoodCount)
+        {
+            // Update treeSpawnChance based on woodCount change
+            UpdateTreeSpawnChance();
+            previousWoodCount = GameManager.instance.woodCount; // Update previousWoodCount
+        }
+        if (GameManager.instance.stoneCount != previousStoneCount)
+        {
+            UpdateRockGolemSpawnChance();
+            previousStoneCount = GameManager.instance.stoneCount;
+        }
 
         // Increment time since last spawn
         timeSinceLastSpawn += Time.deltaTime;
@@ -45,10 +65,8 @@ public class MonsterSpawner : MonoBehaviour
 
     private void AdjustSpawnChances()
     {
-        // Ensure total spawn chance always sums up to 1
         float totalSpawnChance = rockGolemSpawnChance + treeSpawnChance + gruntSpawnChance;
 
-        // Adjust spawn chances proportionally if total is not 1
         if (totalSpawnChance != 1f)
         {
             float adjustmentFactor = 1f / totalSpawnChance;
@@ -60,7 +78,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private void SpawnMonster()
     {
-        float spawnRoll = Random.value; // Random value between 0 and 1
+        float spawnRoll = Random.value;
 
         if (spawnRoll < rockGolemSpawnChance)
         {
@@ -74,6 +92,9 @@ public class MonsterSpawner : MonoBehaviour
         {
             SpawnSingleMonster(gruntPrefab);
         }
+
+        // Update current spawn time after each spawn
+        UpdateCurrentSpawnTime();
     }
 
     private void SpawnSingleMonster(GameObject prefab)
@@ -81,6 +102,11 @@ public class MonsterSpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomSpawnPosition();
         Instantiate(prefab, spawnPosition, Quaternion.identity);
         Debug.Log($"Spawned {prefab.name}. Next spawn in {currentSpawnTime} seconds.");
+    }
+
+    private void UpdateCurrentSpawnTime()
+    {
+        currentSpawnTime = regularSpawnTime * maxSpawnRateMultiplier;
     }
 
     private Vector3 GetRandomSpawnPosition()
@@ -97,8 +123,23 @@ public class MonsterSpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // Draw wireframe circle to visualize spawn area
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, spawnRadius);
+    }
+
+    private void UpdateTreeSpawnChance()
+    {
+        treeSpawnChance += 0.25f * (GameManager.instance.woodCount - previousWoodCount);
+        treeSpawnChance = Mathf.Clamp01(treeSpawnChance);
+
+        Debug.Log($"Updated treeSpawnChance: {treeSpawnChance}");
+    }
+
+    private void UpdateRockGolemSpawnChance()
+    {
+        rockGolemSpawnChance += 0.25f * (GameManager.instance.stoneCount - previousStoneCount);
+        rockGolemSpawnChance = Mathf.Clamp01(rockGolemSpawnChance);
+
+        Debug.Log($"Updated rockGolemSpawnChance: {rockGolemSpawnChance}");
     }
 }
