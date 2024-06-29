@@ -471,11 +471,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b12b35dc8b620e499e98fb16ee759fb, type: 3}
---- !u!1 &787799147 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 153062, guid: 36ebaa25b1c08964b99fdbb5a236580b, type: 3}
-  m_PrefabInstance: {fileID: 428675044}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &803763312 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7130561338779871068, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
@@ -795,11 +790,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1589942554 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 177148, guid: a653d3366756c8641befacf512a2be62, type: 3}
-  m_PrefabInstance: {fileID: 1175900449}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2011451776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -809,37 +799,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 764857184492554781, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingMatOriginal
-      value: 
-      objectReference: {fileID: 2100000, guid: 2f99f5555f41de9409febfd2ba5d84ed, type: 2}
-    - target: {fileID: 764857184492554781, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingMatPositive
-      value: 
-      objectReference: {fileID: 2100000, guid: 676f6fffa37d38341b9080705c6e6ebd, type: 2}
-    - target: {fileID: 764857184492554781, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: gameObjectToPosition
       value: 
       objectReference: {fileID: 385996854}
-    - target: {fileID: 764857184492554781, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingList.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 764857184492554781, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingList.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 764857184492554781, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingList.Array.data[1]
-      value: 
-      objectReference: {fileID: 1589942554}
-    - target: {fileID: 764857184492554781, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingList.Array.data[2]
-      value: 
-      objectReference: {fileID: 787799147}
-    - target: {fileID: 2252016631647805634, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: woodenBuilding
-      value: 
-      objectReference: {fileID: 174730, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
     - target: {fileID: 4136251544226906973, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.4784007
@@ -885,37 +847,9 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8640109204625707276, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8640109204625707276, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingMatOriginal
-      value: 
-      objectReference: {fileID: 2100000, guid: 2f99f5555f41de9409febfd2ba5d84ed, type: 2}
-    - target: {fileID: 8640109204625707276, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingMatPositive
-      value: 
-      objectReference: {fileID: 2100000, guid: 676f6fffa37d38341b9080705c6e6ebd, type: 2}
-    - target: {fileID: 8640109204625707276, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
       propertyPath: gameObjectToPosition
       value: 
       objectReference: {fileID: 385996854}
-    - target: {fileID: 8640109204625707276, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingList.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8640109204625707276, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingList.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8640109204625707276, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingList.Array.data[1]
-      value: 
-      objectReference: {fileID: 1589942554}
-    - target: {fileID: 8640109204625707276, guid: a44acb87a4d966449a2e3dbcb942a209, type: 3}
-      propertyPath: buildingList.Array.data[2]
-      value: 
-      objectReference: {fileID: 787799147}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
