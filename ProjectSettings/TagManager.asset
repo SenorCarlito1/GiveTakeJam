@@ -11,6 +11,9 @@ TagManager:
   - mStarter
   - mPlate
   - Enemy
+  - Engine
+  - Keys
+  - SteeringWheel
   layers:
   - Default
   - TransparentFX

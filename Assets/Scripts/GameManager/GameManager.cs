@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject activeMenu;
     public GameObject pauseMenu;
     public GameObject loseMenu;
+    public GameObject winMenu;
     public GameObject inventoryMenu;
     public GameObject hotBarMenu;
     public GameObject settingsMenu;
@@ -191,6 +192,13 @@ public class GameManager : MonoBehaviour
     {
         isPaused = !isPaused;
         activeMenu = loseMenu;
+        activeMenu.SetActive(isPaused);
+        pauseState();
+    }
+    public void Win()
+    {
+        isPaused = !isPaused;
+        activeMenu = winMenu;
         activeMenu.SetActive(isPaused);
         pauseState();
     }
