@@ -49,7 +49,7 @@ public class Boat : MonoBehaviour
         for (int i = playerHotBar.Container.Count - 1; i >= 0; i--)
         {
             HotBarObject.HotbarSlot slot = playerHotBar.Container[i];
-            if (slot.item.type == ItemType.Part) // Assuming ItemType.Part is used for boat parts
+            if (slot.item.type == ItemType.Resource) // Assuming ItemType.Part is used for boat parts
             {
                 Debug.Log($"Found part {slot.item.name} in inventory. Attempting to attach...");
                 GameObject partPrefab = slot.item.itemPrefab;

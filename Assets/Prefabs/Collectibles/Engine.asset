@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1533941219883023513, guid: fd811ba05ca763b479e8417e130be19c, type: 3}
   itemPrefab: {fileID: 548830131646859053, guid: db8ca4b999cb90b4b91adff57ab0926f, type: 3}
-  type: 3
+  type: 2
   description: 'Engine
 
 '
