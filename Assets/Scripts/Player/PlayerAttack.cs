@@ -17,6 +17,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private MeshFilter toolModel;
     [SerializeField] private MeshRenderer toolMat;
     [SerializeField] public MeshCollider toolCollider;
+    [SerializeField] public BoxCollider fistCollider;
     //[SerializeField] public BoxCollider SwordCollider;
     //[SerializeField] public BoxCollider PickCollider;
     //[SerializeField] public BoxCollider AxeCollider;

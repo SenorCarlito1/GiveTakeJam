@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af61bc65ffd73f64fa495e0c46f05f27, type: 3}
   m_Name: Fists
   m_EditorClassIdentifier: 
-  damage: 0
-  durability: 0
-  hitCollider: {fileID: 0}
-  attackInterval: 0
-  weaponAnim: {fileID: 0}
+  prefab: {fileID: 2809145633812410168, guid: 3d0f01f70f4219e4e95c229a919bcc2c, type: 3}
+  type: 1
+  description: 
+  serialNumber: 0
+  damage: 1
+  durability: 1e+26
+  attackInterval: 1
   model: {fileID: 0}
   swingSound: {fileID: 0}
   swingSoundVol: 0
