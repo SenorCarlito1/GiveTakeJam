@@ -42,7 +42,16 @@ public class ResourcePickup : MonoBehaviour
             {
                 hotBar.AddItem(resource, 1);
                 GameManager.instance.hotBarMenu.GetComponentInChildren<DisplayHotBar>().CreateDisplay();
-                GameManager.instance.woodCount++;
+                switch (resource.description)
+                {
+                    case "Wood":
+                        GameManager.instance.woodCount++;
+                        break;
+                    case "Stone":
+                        GameManager.instance.stoneCount++;
+                        break;
+                }
+                
                 inRange = false;
                 Destroy(gameObject);
             }
