@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
 {
     [Header("----Attack Parameters----")]
     public List<ToolStats> toolList = new List<ToolStats>();
-    private int selectedTool;
+    public int selectedTool;
     [SerializeField] private float damage;
     [SerializeField] private float durability;
     [SerializeField] private float attackInterval;

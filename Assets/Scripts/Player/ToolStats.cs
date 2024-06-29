@@ -7,7 +7,7 @@ using UnityEngine;
 public class ToolStats : ItemObject
 {
     [Header("----Tool Stats----")]
-    [SerializeField] public int serialNumber ;
+    [SerializeField] public int serialNumber;
     [SerializeField] public float damage;
     [SerializeField] public float durability;
     //[SerializeField] public Collider hitCollider;

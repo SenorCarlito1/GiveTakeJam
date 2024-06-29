@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public SkinnedMeshRenderer torsoModel;
     public PlayerAttack attackScript;
     public Animator playerAnim;
+    public int currentTool;
 
     [Header("-----UI-----")]
     public GameObject activeMenu;
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     float timeScaleOrig;
     public int woodCount;
+    public int stoneCount;
 
     // Start is called before the first frame update
     void Awake()
@@ -124,6 +126,11 @@ public class GameManager : MonoBehaviour
         }
         
         ChangePOV();
+
+        if (attackScript.toolList.Count > 0)
+        {
+            currentTool = attackScript.toolList[attackScript.selectedTool].serialNumber;
+        }
     }
 
     public void pauseState()
