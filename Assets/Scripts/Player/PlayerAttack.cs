@@ -150,6 +150,9 @@ public class PlayerAttack : MonoBehaviour
 
         switch (toolList[selectedTool].serialNumber)
         {
+            case 0:
+                durability = 100000000000000000;
+                break;
             case 1:
                 gameObject.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 gameObject.transform.localPosition = new Vector3(0.03f, 0.217f, 0.005f);
