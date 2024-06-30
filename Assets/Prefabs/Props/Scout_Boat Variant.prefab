@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 517041246412221801, guid: 2e6004fa62d51864e8443b480f0725bc, type: 3}
+      propertyPath: requiredPartSlots.Array.data[1]
+      value: 
+      objectReference: {fileID: 8303275012214440532, guid: 5813964f820a5354a8f5ab73980b12c6, type: 3}
+    - target: {fileID: 517041246412221801, guid: 2e6004fa62d51864e8443b480f0725bc, type: 3}
+      propertyPath: requiredPartSlots.Array.data[2]
+      value: 
+      objectReference: {fileID: 6586659963592426619, guid: 84ca912d10a1d1c4fb20dbf3685cfc26, type: 3}
     - target: {fileID: 6312131233816851377, guid: 2e6004fa62d51864e8443b480f0725bc, type: 3}
       propertyPath: m_Name
       value: Scout_Boat Variant
