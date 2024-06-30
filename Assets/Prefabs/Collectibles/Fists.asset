@@ -17,9 +17,9 @@ MonoBehaviour:
   description: 
   serialNumber: 0
   damage: 1
-  durability: 1e+26
+  durability: 100
   attackInterval: 1
-  model: {fileID: 0}
+  model: {fileID: 2809145633812410168, guid: 3d0f01f70f4219e4e95c229a919bcc2c, type: 3}
   swingSound: {fileID: 0}
   swingSoundVol: 0
   hitSound: {fileID: 0}
