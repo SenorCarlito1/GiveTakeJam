@@ -134,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ColliderOn()
     {
-        if (attackScript.toolList[GameManager.instance.currentTool].serialNumber == 0)
+        if (GameManager.instance.currentTool == 0)
         {
             attackScript.fistCollider.enabled = true;
         }
@@ -146,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void ColliderOff()
     {
-        if (attackScript.toolList[GameManager.instance.currentTool].serialNumber == 0)
+        if (GameManager.instance.currentTool == 0)
         {
             attackScript.fistCollider.enabled = false;
         }
