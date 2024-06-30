@@ -35,6 +35,10 @@ public class ResourceHealth : MonoBehaviour, IDamage
                 {
                     GameManager.instance.stoneCount += 0;
                 }
+                else if (GameManager.instance.currentTool == 0)
+                {
+                    GameManager.instance.stoneCount += 1;
+                }
                 break;
             case "Tree":
                 if (GameManager.instance.currentTool == 2)
@@ -48,6 +52,10 @@ public class ResourceHealth : MonoBehaviour, IDamage
                 else if (GameManager.instance.currentTool == 1)
                 {
                     GameManager.instance.woodCount += 0;
+                }
+                else if (GameManager.instance.currentTool == 0)
+                {
+                    GameManager.instance.woodCount += 1;
                 }
                 break;
         }
