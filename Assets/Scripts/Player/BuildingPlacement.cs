@@ -15,7 +15,7 @@ public class BuildingPlacement : MonoBehaviour
     [SerializeField] private Material buildingMatPositive;
     [SerializeField] private Material buildingMatOriginal;
     [SerializeField] private Material buildingMatNegative;
-    public GameObject[] buildingList = new GameObject[2];
+    // public GameObject[] buildingList = new GameObject[2];
 
     private bool inBuildMode = false;
 
@@ -23,7 +23,8 @@ public class BuildingPlacement : MonoBehaviour
 
     private Camera _camera;
 
-    public GameObject gameObjectToPosition;
+    [SerializeField] private Building gameObjectToPosition;
+    Vector3 origPos;
 
     private MeshCollider[] meshColliders;
     private MeshRenderer[] meshRenders;
@@ -32,9 +33,8 @@ public class BuildingPlacement : MonoBehaviour
     void Start()
     {
         _camera = GameManager.instance.currCamera;
+        origPos = gameObjectToPosition.transform.position;
 
-        meshColliders = gameObjectToPosition.GetComponentsInChildren<MeshCollider>();
-        meshRenders = gameObjectToPosition.GetComponentsInChildren<MeshRenderer>();
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class BuildingPlacement : MonoBehaviour
         }
 
         // Enables build mode
-        if (Input.GetKeyDown(KeyCode.F6) && GameManager.instance.woodCount >= 8) 
+        if (Input.GetKeyDown(KeyCode.F6) && GameManager.instance.woodCount >= 1)
             inBuildMode = true;
 
 
@@ -57,17 +57,17 @@ public class BuildingPlacement : MonoBehaviour
         if (inBuildMode && GameManager.instance.currCamera)
         {
 
-            if (selectedBuilding == 2)
-            {
-                gameObjectToPosition.transform.position = hitInfo.point + new Vector3(0, 2, 0);
-            }
-            else if (selectedBuilding == 0 || selectedBuilding == 1)
-            {
-                gameObjectToPosition.transform.position = hitInfo.point + new Vector3(0, 3, 0);
-            }
-            ChangeMeshProperties();
+
+            gameObjectToPosition.transform.position = hitInfo.point + new Vector3(0, 3, 0);
+            gameObjectToPosition.UpdateMaterial(buildingMatPositive);
             HandleInput(hitInfo);
+            if (inBuildMode == false)
+            {
+                gameObjectToPosition.transform.position = origPos;
+            }
+
         }
+
     }
 
     private void HandleInput(RaycastHit hitInfo)
@@ -78,8 +78,8 @@ public class BuildingPlacement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            
-            for (int i = 0; i < GameManager.instance.hotBarObject.Container.Count; i++) 
+
+            for (int i = 0; i < GameManager.instance.hotBarObject.Container.Count; i++)
             {
                 if (GameManager.instance.hotBarObject.Container[i].item.type == ItemType.Resource)
                 {
@@ -89,15 +89,16 @@ public class BuildingPlacement : MonoBehaviour
                     if (GameManager.instance.hotBarObject.Container[i].amount == 0)
                     {
                         GameManager.instance.hotBarObject.Container.Remove(GameManager.instance.hotBarObject.Container[i]);
-                        
+
                     }
-                   
+
                 }
             }
-            
+
             SpawnBuilding(hitInfo);
+
             // Jymeer 
-            for(int i = 0; i < GameManager.instance.hotBarMenu.transform.childCount; i++)
+            for (int i = 0; i < GameManager.instance.hotBarMenu.transform.childCount; i++)
             {
                 Destroy(GameManager.instance.hotBarMenu.transform.transform.GetChild(i).gameObject);
             }
@@ -119,51 +120,40 @@ public class BuildingPlacement : MonoBehaviour
 
     private void SwitchBuilding()
     {
-        if (Input.mouseScrollDelta.y > 0 && selectedBuilding < buildingList.Length - 1 && !inBuildMode)
-        {
-            selectedBuilding++;
-            ChangeBuilding();
-            Debug.Log("UP current Index is " + selectedBuilding);
+        //if (Input.mouseScrollDelta.y > 0 && selectedBuilding < buildingList.Length - 1 && !inBuildMode)
+        //{
+        //    selectedBuilding++;
+        //    ChangeBuilding();
+        //    Debug.Log("UP current Index is " + selectedBuilding);
 
-        }
-        else if (Input.mouseScrollDelta.y < 0 && selectedBuilding > 0 && !inBuildMode)
-        {
-            selectedBuilding--;
-            ChangeBuilding();
-            Debug.Log("DOWN current Index is " + selectedBuilding);
-        }
+        //}
+        //else if (Input.mouseScrollDelta.y < 0 && selectedBuilding > 0 && !inBuildMode)
+        //{
+        //    selectedBuilding--;
+        //    ChangeBuilding();
+        //    Debug.Log("DOWN current Index is " + selectedBuilding);
+        //}
 
     }
 
     private void ChangeBuilding()
     {
-        gameObjectToPosition = buildingList[selectedBuilding].gameObject;
-        meshColliders = buildingList[selectedBuilding].GetComponentsInChildren<MeshCollider>();
-        meshRenders = buildingList[selectedBuilding].GetComponentsInChildren<MeshRenderer>();
+        //gameObjectToPosition = buildingList[selectedBuilding].gameObject;
+        //meshColliders = buildingList[selectedBuilding].GetComponentsInChildren<MeshCollider>();
+        //meshRenders = buildingList[selectedBuilding].GetComponentsInChildren<MeshRenderer>();
     }
 
     private void SpawnBuilding(RaycastHit hitInfo)
     {
-        for (int i = 0; i < meshRenders.Length; i++)
-        {
-            meshRenders[i].material = buildingMatOriginal;
-        }
+        //    for (int i = 0; i < meshRenders.Length; i++)
+        //    {
+        //        meshRenders[i].material = buildingMatOriginal;
+        //    }
 
-        if (selectedBuilding == 2)
-        {
-            Instantiate(gameObjectToPosition, hitInfo.point + new Vector3(0, 2, 0), gameObjectToPosition.transform.rotation);
-        }
-        else if (selectedBuilding == 0 || selectedBuilding == 1)
-        {
-            gameObjectToPosition.transform.position = hitInfo.point + new Vector3(0, 3, 0);
-        }
-        for (int i = 0; i < meshColliders.Length; i++)
-        {
-            meshColliders[i].enabled = true;
-        }
+        Building building = Instantiate(gameObjectToPosition, hitInfo.point + new Vector3(0, 3, 0), gameObjectToPosition.transform.rotation);
+        // building.UpdateMaterial(buildingMatOriginal);
+        building.PlaceBuilding();
 
-        
-        
         inBuildMode = false;
     }
     private void FixedUpdate()

@@ -430,7 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 2061183093705987369}
   audioSource: {fileID: 300411584376208777}
-  woodenBuilding: {fileID: 0}
+  woodenBuilding: {fileID: 174730, guid: a611ef0d3e2e6bd4d8d7aa5deeedec15, type: 3}
   fowardSpeed: 10
   backSpeed: 5
   sprintMod: 2
@@ -678,6 +678,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7662810888401757841}
     m_Modifications:
+    - target: {fileID: 2272774689084407242, guid: eea99c80d96dbc64892793195f314104, type: 3}
+      propertyPath: buildingMatOriginal
+      value: 
+      objectReference: {fileID: 2100000, guid: 2f99f5555f41de9409febfd2ba5d84ed, type: 2}
+    - target: {fileID: 2272774689084407242, guid: eea99c80d96dbc64892793195f314104, type: 3}
+      propertyPath: buildingMatPositive
+      value: 
+      objectReference: {fileID: 2100000, guid: 676f6fffa37d38341b9080705c6e6ebd, type: 2}
     - target: {fileID: 2892485530541286703, guid: eea99c80d96dbc64892793195f314104, type: 3}
       propertyPath: m_Name
       value: BuildPos
@@ -740,6 +748,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2966113046789579591}
     m_Modifications:
+    - target: {fileID: 2272774689084407242, guid: eea99c80d96dbc64892793195f314104, type: 3}
+      propertyPath: buildingMatOriginal
+      value: 
+      objectReference: {fileID: 2100000, guid: 2f99f5555f41de9409febfd2ba5d84ed, type: 2}
+    - target: {fileID: 2272774689084407242, guid: eea99c80d96dbc64892793195f314104, type: 3}
+      propertyPath: buildingMatPositive
+      value: 
+      objectReference: {fileID: 2100000, guid: 676f6fffa37d38341b9080705c6e6ebd, type: 2}
     - target: {fileID: 2272774689084407242, guid: eea99c80d96dbc64892793195f314104, type: 3}
       propertyPath: gameObjectToPosition
       value: 
