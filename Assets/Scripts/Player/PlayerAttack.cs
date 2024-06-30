@@ -18,6 +18,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private MeshRenderer toolMat;
     [SerializeField] public MeshCollider toolCollider;
     [SerializeField] public BoxCollider fistCollider;
+    [SerializeField] public ToolStats fist;
     //[SerializeField] public BoxCollider SwordCollider;
     //[SerializeField] public BoxCollider PickCollider;
     //[SerializeField] public BoxCollider AxeCollider;
@@ -36,6 +37,8 @@ public class PlayerAttack : MonoBehaviour
         anim = GameManager.instance.playerAnim;
         //weaponReach = GetComponent<BoxCollider>();
         //weaponReach.gameObject.SetActive(false);
+        //AddTool();
+        AddTool(fist);
     }
 
     private void Update()
