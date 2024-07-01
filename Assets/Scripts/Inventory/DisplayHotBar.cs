@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DisplayHotBar : MonoBehaviour
 {
@@ -14,12 +15,15 @@ public class DisplayHotBar : MonoBehaviour
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
 
+
+
     public void CreateDisplay()
     {
 
         for(int i = 0; i < HotBar.Container.Count; i++)
         {
             var obj = Instantiate(HotBar.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
+            obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = HotBar.Container[i].item.itemImage;
             obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
             obj.GetComponentInChildren<TextMeshProUGUI>().text = HotBar.Container[i].amount.ToString("n0");
         }

@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1533941219883023513, guid: fd811ba05ca763b479e8417e130be19c, type: 3}
   itemPrefab: {fileID: 8303275012214546036, guid: 5813964f820a5354a8f5ab73980b12c6, type: 3}
+  itemImage: {fileID: 21300000, guid: 4d9cfde16158677438fd824228014f99, type: 3}
   type: 2
   description: SteeringWheel
