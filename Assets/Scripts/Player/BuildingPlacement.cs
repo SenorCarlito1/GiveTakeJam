@@ -19,7 +19,7 @@ public class BuildingPlacement : MonoBehaviour
 
     private bool inBuildMode = false;
 
-    private int selectedBuilding = 0;
+    // private int selectedBuilding = 0;
 
     private Camera _camera;
 

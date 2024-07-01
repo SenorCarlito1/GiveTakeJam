@@ -149,7 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  rescource: {fileID: 1190917856291312703, guid: 5db3739a856e3c140a89bfb98ae6198d, type: 3}
+  woodResource: {fileID: 11400000, guid: f9e8ad58d27ff0649a2c3c5aeb33e5a2, type: 2}
+  stoneResource: {fileID: 11400000, guid: 94b895e5cf4b02a4091356e4befd256c, type: 2}
   currHealth: 0
 --- !u!205 &3993068900061199408
 LODGroup:
