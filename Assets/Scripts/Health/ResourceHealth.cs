@@ -20,62 +20,121 @@ public class ResourceHealth : MonoBehaviour, IDamage
         currHealth = maxHealth;
         resourceName = gameObject.name;
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("I TOUCHED SOMETHING");
+    }
     public void TakeDamage(float dmg)
     {
         int _resourceToAdd = 0;
-        switch (resourceName)
+       
+        //switch (resourceName)
+        //{
+        //    case "Stone":
+        //        if (GameManager.instance.currentTool == 2)
+        //        {
+        //            GameManager.instance.stoneCount += 4;
+        //            _resourceToAdd = 4;
+        //        }
+        //        else if (GameManager.instance.currentTool == 3)
+        //        {
+        //            GameManager.instance.stoneCount += 2;
+        //            _resourceToAdd = 2;
+        //        }
+        //        else if (GameManager.instance.currentTool == 1)
+        //        {
+        //            GameManager.instance.stoneCount += 0;
+        //            _resourceToAdd = 0;
+        //        }
+        //        else if (GameManager.instance.currentTool == 0)
+        //        {
+        //            GameManager.instance.stoneCount += 1;
+        //            _resourceToAdd = 1;
+        //        }
+        //        _resourceObject = stoneResource;
+        //        break;
+        //    case "Tree":
+        //        if (GameManager.instance.currentTool == 2)
+        //        {
+        //            GameManager.instance.woodCount += 2;
+        //            _resourceToAdd = 2;
+        //            Debug.Log("Got Wood");
+        //        }
+        //        else if (GameManager.instance.currentTool == 3)
+        //        {
+        //            GameManager.instance.woodCount += 3;
+        //            _resourceToAdd = 3;
+        //            Debug.Log("Got Wood");
+        //        }
+        //        else if (GameManager.instance.currentTool == 1)
+        //        {
+        //            GameManager.instance.woodCount += 0;
+        //            _resourceToAdd = 0;
+        //            Debug.Log("Got Wood");
+        //        }
+        //        else if (GameManager.instance.currentTool == 0)
+        //        {
+        //            GameManager.instance.woodCount += 1;
+        //            _resourceToAdd = 1;
+        //            Debug.Log("Got Wood");
+        //        }
+        //        _resourceObject = woodResource;
+        //        break;
+        //    case "Tree (1)":
+        //        if (GameManager.instance.currentTool == 2)
+        //        {
+        //            GameManager.instance.woodCount += 2;
+        //            _resourceToAdd = 2;
+        //            Debug.Log("Got Wood");
+        //        }
+        //        else if (GameManager.instance.currentTool == 3)
+        //        {
+        //            GameManager.instance.woodCount += 3;
+        //            _resourceToAdd = 3;
+        //            Debug.Log("Got Wood");
+        //        }
+        //        else if (GameManager.instance.currentTool == 1)
+        //        {
+        //            GameManager.instance.woodCount += 0;
+        //            _resourceToAdd = 0;
+        //            Debug.Log("Got Wood");
+        //        }
+        //        else if (GameManager.instance.currentTool == 0)
+        //        {
+        //            GameManager.instance.woodCount += 1;
+        //            _resourceToAdd = 1;
+        //            Debug.Log("Got Wood");
+        //        }
+        //        _resourceObject = woodResource;
+        //        break;
+        //}
+        if (gameObject.CompareTag("Tree"))
         {
-            case "Stone":
-                if (GameManager.instance.currentTool == 2)
-                {
-                    GameManager.instance.stoneCount += 4;
-                    _resourceToAdd = 4;
-                }
-                else if (GameManager.instance.currentTool == 3)
-                {
-                    GameManager.instance.stoneCount += 2;
-                    _resourceToAdd = 2;
-                }
-                else if (GameManager.instance.currentTool == 1)
-                {
-                    GameManager.instance.stoneCount += 0;
-                    _resourceToAdd = 0;
-                }
-                else if (GameManager.instance.currentTool == 0)
-                {
-                    GameManager.instance.stoneCount += 1;
-                    _resourceToAdd = 1;
-                }
-                _resourceObject = stoneResource;
-                break;
-            case "Tree":
-                if (GameManager.instance.currentTool == 2)
-                {
-                    GameManager.instance.woodCount += 2;
-                    _resourceToAdd = 2;
-                    Debug.Log("Got Wood");
-                }
-                else if (GameManager.instance.currentTool == 3)
-                {
-                    GameManager.instance.woodCount += 3;
-                    _resourceToAdd = 3;
-                    Debug.Log("Got Wood");
-                }
-                else if (GameManager.instance.currentTool == 1)
-                {
-                    GameManager.instance.woodCount += 0;
-                    _resourceToAdd = 0;
-                    Debug.Log("Got Wood");
-                }
-                else if (GameManager.instance.currentTool == 0)
-                {
-                    GameManager.instance.woodCount += 1;
-                    _resourceToAdd = 1;
-                    Debug.Log("Got Wood");
-                }
-                _resourceObject = woodResource;
-                break;
+            if (GameManager.instance.currentTool == 2)
+            {
+                GameManager.instance.woodCount += 2;
+                _resourceToAdd = 2;
+                Debug.Log("Got Wood");
+            }
+            else if (GameManager.instance.currentTool == 3)
+            {
+                GameManager.instance.woodCount += 3;
+                _resourceToAdd = 3;
+                Debug.Log("Got Wood");
+            }
+            else if (GameManager.instance.currentTool == 1)
+            {
+                GameManager.instance.woodCount += 0;
+                _resourceToAdd = 0;
+                Debug.Log("Got Wood");
+            }
+            else if (GameManager.instance.currentTool == 0)
+            {
+                GameManager.instance.woodCount += 1;
+                _resourceToAdd = 1;
+                Debug.Log("Got Wood");
+            }
+            _resourceObject = woodResource;
         }
         GameManager.instance.hotBarObject.AddItem(_resourceObject, _resourceToAdd);
         Debug.Log(_resourceToAdd);
